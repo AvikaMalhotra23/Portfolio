@@ -27,25 +27,18 @@ export default function App() {
 
   useEffect(() => {
     const html = document.documentElement;
-    if (darkMode) {
-      html.classList.add('dark');
-      html.classList.remove('light');
-    } else {
-      html.classList.remove('dark');
-      html.classList.add('light');
-    }
+    if (darkMode) { html.classList.add('dark'); html.classList.remove('light'); }
+    else { html.classList.remove('dark'); html.classList.add('light'); }
   }, [darkMode]);
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-main)', color: 'var(--text-primary)', transition: 'background 0.3s ease, color 0.3s ease' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-page)', color: 'var(--text-dark)', transition: 'background 0.25s ease, color 0.25s ease' }}>
 
       <Navbar
-        darkMode={darkMode}
-        setDarkMode={setDarkMode}
+        darkMode={darkMode} setDarkMode={setDarkMode}
         onOpenResume={() => setIsResumeOpen(true)}
         onOpenBranchEdit={() => setIsBranchEditOpen(true)}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
+        searchQuery={searchQuery} setSearchQuery={setSearchQuery}
         lpuBranch={lpuBranch}
       />
 
@@ -55,25 +48,18 @@ export default function App() {
           onOpenBranchEdit={() => setIsBranchEditOpen(true)}
           lpuBranch={lpuBranch}
         />
-
         <div className="section-divider" />
         <AboutSection />
-
         <div className="section-divider" />
         <EducationSection lpuBranch={lpuBranch} onOpenBranchEdit={() => setIsBranchEditOpen(true)} />
-
         <div className="section-divider" />
         <SkillsSection searchQuery={searchQuery} />
-
         <div className="section-divider" />
         <ProjectsSection onSelectProject={p => setSelectedProject(p)} searchQuery={searchQuery} />
-
         <div className="section-divider" />
         <CertificationsSection onSelectCert={c => setSelectedCert(c)} searchQuery={searchQuery} />
-
         <div className="section-divider" />
         <HighlightsSection />
-
         <div className="section-divider" />
         <ContactSection />
       </main>
@@ -84,7 +70,6 @@ export default function App() {
       <BranchEditModal isOpen={isBranchEditOpen} onClose={() => setIsBranchEditOpen(false)} currentBranch={lpuBranch} onSaveBranch={b => setLpuBranch(b)} />
       <ProjectDetailModal project={selectedProject} onClose={() => setSelectedProject(null)} />
       <CertificateModal cert={selectedCert} onClose={() => setSelectedCert(null)} />
-
     </div>
   );
 }

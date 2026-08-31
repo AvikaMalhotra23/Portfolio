@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { projects } from '../data/portfolioData';
-import { ExternalLink, ChevronRight, Eye, Tag, ArrowRight } from 'lucide-react';
+import { ChevronRight, Eye, ArrowRight } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const categories = ['All', 'Web Development', 'Learning Platform', 'Web & Location', 'Student Assistance', 'Hardware & ECE'];
@@ -20,120 +20,78 @@ export default function ProjectsSection({ onSelectProject, searchQuery }) {
   });
 
   return (
-    <section ref={ref} id="projects" className="section" style={{ background: 'var(--bg-main)' }}>
-      {/* Subtle bg accent */}
-      <div style={{
-        position: 'absolute', top: 0, left: 0, right: 0, height: '40%',
-        background: 'linear-gradient(180deg, var(--indigo-soft) 0%, transparent 100%)',
-        pointerEvents: 'none', zIndex: 0,
-      }} />
-      <span className="code-deco" style={{ top: '10%', right: '3%', fontSize: '1rem' }}>{'{ }'}</span>
+    <section ref={ref} id="projects" className="section" style={{ background: 'var(--bg-white)' }}>
+      <div className="container">
 
-      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-
-        <div className="section-header reveal">
+        <div className="sec-header reveal">
           <div className="eyebrow">Portfolio Work</div>
-          <h2 className="section-title">
-            Featured{' '}
-            <span className="text-gradient">Projects</span>
-          </h2>
-          <p className="section-subtitle">
-            Practical application of software development, algorithm design, location services, campus utilities and digital electronics.
+          <h2 className="sec-title">Featured <span style={{ color: 'var(--accent)' }}>Projects</span></h2>
+          <p className="sec-subtitle">
+            Practical application of software development, algorithm design, location services, campus utilities, and digital electronics.
           </p>
         </div>
 
         {/* Filter tabs */}
-        <div className="reveal" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.5rem', marginBottom: '3rem' }}>
+        <div className="reveal" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.45rem', marginBottom: '2.5rem' }}>
           {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={`filter-tab${filter === cat ? ' active' : ''}`}
-            >{cat}</button>
+            <button key={cat} onClick={() => setFilter(cat)} className={`tab${filter === cat ? ' active' : ''}`}>{cat}</button>
           ))}
         </div>
 
-        {/* Cards grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.75rem' }} className="projects-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }} className="proj-grid">
           {filtered.map((project, i) => (
-            <article
-              key={project.id}
-              className={`card reveal reveal-delay-${Math.min(i + 1, 6)}`}
-              style={{
-                padding: 0, overflow: 'hidden', display: 'flex',
-                flexDirection: 'column', cursor: 'default',
-              }}
-            >
+            <article key={project.id} className={`card reveal rd-${Math.min(i + 1, 6)}`} style={{ padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+
               {/* Image */}
-              <div className="project-img-wrap" style={{ position: 'relative', borderRadius: 'var(--r-xl) var(--r-xl) 0 0' }}>
-                <img
-                  src={project.image}
-                  alt={project.title}
+              <div style={{ position: 'relative', aspectRatio: '16/9', overflow: 'hidden', background: 'var(--bg-subtle)' }}>
+                <img src={project.image} alt={project.title}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', transition: 'transform 0.45s ease', display: 'block' }}
+                  onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
+                  onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                   onError={e => { e.target.src = "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80"; }}
                 />
-                {/* Type badge overlay */}
+                {/* Type badge */}
                 <div style={{
-                  position: 'absolute', top: 12, left: 12,
-                  background: 'rgba(255,255,255,0.92)',
-                  backdropFilter: 'blur(8px)',
-                  padding: '0.28rem 0.7rem',
-                  borderRadius: 'var(--r-full)',
-                  fontSize: '0.7rem', fontWeight: 700,
-                  color: 'var(--indigo)',
-                  border: '1px solid var(--border-card)',
-                  boxShadow: 'var(--shadow-xs)',
+                  position: 'absolute', top: 10, left: 10,
+                  background: 'rgba(255,255,255,0.94)',
+                  padding: '0.22rem 0.6rem', borderRadius: 'var(--r-pill)',
+                  fontSize: '0.68rem', fontWeight: 700, color: 'var(--accent)',
+                  border: '1px solid var(--border)', boxShadow: 'var(--shadow-xs)',
                 }}>
                   {project.typeTag}
                 </div>
-                {/* Quick view hover */}
-                <button
-                  onClick={() => onSelectProject(project)}
-                  style={{
-                    position: 'absolute', bottom: 10, right: 10,
-                    display: 'flex', alignItems: 'center', gap: '0.35rem',
-                    background: 'rgba(255,255,255,0.92)',
-                    backdropFilter: 'blur(8px)',
-                    padding: '0.35rem 0.7rem',
-                    borderRadius: 'var(--r-full)',
-                    border: '1px solid var(--border-card)',
-                    fontSize: '0.72rem', fontWeight: 700, color: 'var(--indigo)',
-                    cursor: 'pointer', transition: 'all 0.18s ease',
-                    boxShadow: 'var(--shadow-xs)',
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--indigo)'; e.currentTarget.style.color = '#fff'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.92)'; e.currentTarget.style.color = 'var(--indigo)'; }}
+                {/* Quick view */}
+                <button onClick={() => onSelectProject(project)} style={{
+                  position: 'absolute', bottom: 8, right: 8,
+                  display: 'flex', alignItems: 'center', gap: '0.3rem',
+                  background: 'rgba(255,255,255,0.94)',
+                  padding: '0.3rem 0.62rem', borderRadius: 'var(--r-pill)',
+                  border: '1px solid var(--border)', fontSize: '0.68rem', fontWeight: 700,
+                  color: 'var(--accent)', cursor: 'pointer', transition: 'all 0.17s ease',
+                  boxShadow: 'var(--shadow-xs)',
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--accent)'; e.currentTarget.style.color = '#fff'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.94)'; e.currentTarget.style.color = 'var(--accent)'; }}
                 >
-                  <Eye size={12} /> Quick View
+                  <Eye size={11} /> Quick View
                 </button>
               </div>
 
-              {/* Card body */}
-              <div style={{ padding: '1.35rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '0.85rem', flex: 1 }}>
-                <h3 style={{
-                  fontFamily: 'var(--font-heading)', fontWeight: 800,
-                  fontSize: '1.05rem', color: 'var(--text-primary)', lineHeight: 1.25,
-                  transition: 'color 0.18s ease',
-                }}>
+              {/* Body */}
+              <div style={{ padding: '1.2rem 1.35rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', flex: 1 }}>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1rem', color: 'var(--text-dark)', lineHeight: 1.25 }}>
                   {project.title}
                 </h3>
-
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                <p style={{ fontSize: '0.83rem', color: 'var(--text-body)', lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                   {project.shortDescription}
                 </p>
 
                 {/* Key focus */}
                 <div>
-                  <div style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.4rem' }}>
-                    Key Focus
-                  </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                  <div style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.35rem' }}>Key Focus</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
                     {project.keyFocus.map((f, fi) => (
-                      <span key={fi} style={{
-                        fontSize: '0.7rem', fontWeight: 600,
-                        padding: '0.2rem 0.55rem', borderRadius: 'var(--r-full)',
-                        background: 'var(--indigo-pastel)', color: 'var(--indigo)',
-                        border: '1px solid rgba(91,80,240,0.18)',
-                      }}>
+                      <span key={fi} style={{ fontSize: '0.68rem', fontWeight: 600, padding: '0.18rem 0.5rem', borderRadius: 'var(--r-pill)', background: 'var(--accent-soft)', color: 'var(--accent-mid)', border: '1px solid var(--accent-line)' }}>
                         {f}
                       </span>
                     ))}
@@ -141,43 +99,41 @@ export default function ProjectsSection({ onSelectProject, searchQuery }) {
                 </div>
 
                 {/* Tech stack */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', paddingTop: '0.75rem', borderTop: '1px solid var(--border-card)' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem', paddingTop: '0.65rem', borderTop: '1px solid var(--border)' }}>
                   {project.techStack.map(tech => (
                     <span key={tech} className="tech-pill">{tech}</span>
                   ))}
                 </div>
               </div>
 
-              {/* Card footer */}
-              <div style={{ padding: '0 1.5rem 1.35rem' }}>
-                <button
-                  onClick={() => onSelectProject(project)}
-                  style={{
-                    width: '100%', padding: '0.65rem',
-                    borderRadius: 'var(--r-full)',
-                    border: '1.5px solid var(--border-card)',
-                    background: 'var(--bg-surface)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
-                    fontSize: '0.82rem', fontWeight: 700,
-                    color: 'var(--text-secondary)', cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    fontFamily: 'var(--font-heading)',
-                  }}
+              {/* Footer */}
+              <div style={{ padding: '0 1.35rem 1.2rem' }}>
+                <button onClick={() => onSelectProject(project)} style={{
+                  width: '100%', padding: '0.6rem',
+                  borderRadius: 'var(--r-pill)', border: '1.5px solid var(--border)',
+                  background: 'var(--bg-subtle)', display: 'flex', alignItems: 'center',
+                  justifyContent: 'center', gap: '0.35rem',
+                  fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-body)',
+                  cursor: 'pointer', transition: 'all 0.18s ease',
+                  fontFamily: 'var(--font-heading)',
+                }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.background = 'var(--indigo)';
-                    e.currentTarget.style.borderColor = 'var(--indigo)';
+                    e.currentTarget.style.background = 'var(--accent)';
+                    e.currentTarget.style.borderColor = 'var(--accent)';
                     e.currentTarget.style.color = '#fff';
-                    e.currentTarget.querySelector('.arrow-icon').style.transform = 'translateX(4px)';
+                    const arr = e.currentTarget.querySelector('.arr');
+                    if (arr) arr.style.transform = 'translateX(3px)';
                   }}
                   onMouseLeave={e => {
-                    e.currentTarget.style.background = 'var(--bg-surface)';
-                    e.currentTarget.style.borderColor = 'var(--border-card)';
-                    e.currentTarget.style.color = 'var(--text-secondary)';
-                    e.currentTarget.querySelector('.arrow-icon').style.transform = 'translateX(0)';
+                    e.currentTarget.style.background = 'var(--bg-subtle)';
+                    e.currentTarget.style.borderColor = 'var(--border)';
+                    e.currentTarget.style.color = 'var(--text-body)';
+                    const arr = e.currentTarget.querySelector('.arr');
+                    if (arr) arr.style.transform = 'translateX(0)';
                   }}
                 >
                   Detailed Overview
-                  <ArrowRight size={14} className="arrow-icon" style={{ transition: 'transform 0.18s ease' }} />
+                  <ArrowRight size={13} className="arr" style={{ transition: 'transform 0.17s ease' }} />
                 </button>
               </div>
             </article>
@@ -185,15 +141,14 @@ export default function ProjectsSection({ onSelectProject, searchQuery }) {
         </div>
 
         {filtered.length === 0 && (
-          <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+          <p style={{ textAlign: 'center', padding: '2.5rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
             No matching projects for "{searchQuery}".
-          </div>
+          </p>
         )}
       </div>
-
       <style>{`
-        @media (max-width: 1024px) { .projects-grid { grid-template-columns: repeat(2, 1fr) !important; } }
-        @media (max-width: 640px)  { .projects-grid { grid-template-columns: 1fr !important; } }
+        @media(max-width:1024px){ .proj-grid{ grid-template-columns:repeat(2,1fr) !important; } }
+        @media(max-width:640px) { .proj-grid{ grid-template-columns:1fr !important; } }
       `}</style>
     </section>
   );

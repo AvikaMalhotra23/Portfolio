@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { personalDetails } from '../data/portfolioData';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
-import {
-  Mail, Phone, FileText, CheckCircle2, Copy, Check,
-  Edit3, ChevronRight, GraduationCap, ArrowDown
-} from 'lucide-react';
+import { Mail, Phone, FileText, CheckCircle2, Copy, Check, Edit3, ChevronRight, GraduationCap, ArrowDown } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function Hero({ onOpenResume, onOpenBranchEdit, lpuBranch }) {
@@ -21,338 +18,220 @@ export default function Hero({ onOpenResume, onOpenBranchEdit, lpuBranch }) {
   };
 
   return (
-    <section
-      ref={ref}
-      style={{
-        position: 'relative',
-        paddingTop: '7rem',
-        paddingBottom: '5rem',
-        background: 'var(--bg-main)',
-        overflow: 'hidden',
-      }}
-    >
-      {/* ── Animated background blobs ── */}
-      <div className="blob blob-1" style={{ top: '-80px', left: '-80px' }} />
-      <div className="blob blob-2" style={{ top: '30%', right: '-60px' }} />
-      <div className="blob blob-3" style={{ bottom: '-60px', left: '40%' }} />
-
-      {/* Subtle dot-grid overlay */}
-      <div style={{
-        position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none',
-        backgroundImage: 'radial-gradient(circle, rgba(91,80,240,0.07) 1px, transparent 1px)',
-        backgroundSize: '28px 28px',
-        maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)',
-        WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)',
-      }} />
-
-      {/* Code deco symbols */}
-      <span className="code-deco" style={{ top: '18%', left: '6%', fontSize: '1.1rem' }}>{'</>'}</span>
-      <span className="code-deco" style={{ top: '60%', right: '7%', fontSize: '0.95rem' }}>{'{ }'}</span>
-      <span className="code-deco" style={{ bottom: '18%', left: '12%', fontSize: '0.8rem' }}>01</span>
-      <span className="code-deco" style={{ top: '28%', right: '18%', fontSize: '0.85rem' }}>{'<>'}</span>
-
-      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+    <section ref={ref} style={{
+      background: 'var(--bg-white)',
+      paddingTop: '6.5rem',
+      paddingBottom: '4.5rem',
+      borderBottom: '1px solid var(--border)',
+    }}>
+      <div className="container">
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'auto 1fr',
-          gap: '4rem',
+          gridTemplateColumns: '220px 1fr',
+          gap: '3.5rem',
           alignItems: 'center',
-        }}
-          className="hero-grid"
-        >
+        }} className="hero-grid">
 
-          {/* ── LEFT: Profile photo card ── */}
-          <div
-            className="reveal"
-            style={{
-              opacity: mounted ? undefined : 0,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '0',
-            }}
-          >
-            <div style={{ position: 'relative' }}>
-              {/* Glow halo */}
+          {/* ── Photo card ── */}
+          <div className={`reveal${mounted ? '' : ''}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{
+              background: 'var(--bg-white)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--r-xl)',
+              boxShadow: 'var(--shadow-md)',
+              padding: '1.25rem',
+              display: 'flex', flexDirection: 'column', alignItems: 'center',
+              gap: '0.9rem', width: '100%',
+            }}>
+              {/* Photo */}
               <div style={{
-                position: 'absolute', inset: '-16px',
-                borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(91,80,240,0.18) 0%, rgba(139,92,246,0.10) 50%, transparent 75%)',
-                filter: 'blur(20px)',
-                zIndex: 0,
-              }} />
-
-              {/* Photo card */}
-              <div style={{
-                position: 'relative', zIndex: 1,
-                background: 'var(--bg-surface)',
-                border: '1.5px solid var(--border-card)',
-                borderRadius: 'var(--r-2xl)',
-                boxShadow: 'var(--shadow-xl)',
-                padding: '1.25rem',
-                display: 'flex', flexDirection: 'column', alignItems: 'center',
-                gap: '1rem',
-                width: 240,
+                width: 148, height: 148, borderRadius: 'var(--r-lg)',
+                overflow: 'hidden',
+                border: '2px solid var(--border)',
+                boxShadow: 'var(--shadow-sm)',
+                flexShrink: 0, position: 'relative',
               }}>
-
-                {/* Photo frame */}
+                <img src={personalDetails.photo} alt="Avika Malhotra"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', transition: 'transform 0.4s ease' }}
+                  onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
+                  onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                  onError={e => { e.target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80"; }}
+                />
                 <div style={{
-                  position: 'relative',
-                  width: 160, height: 160,
-                  borderRadius: 'var(--r-xl)',
-                  overflow: 'hidden',
-                  border: '3px solid var(--bg-surface)',
-                  boxShadow: '0 0 0 3px var(--indigo), var(--shadow-md)',
-                  flexShrink: 0,
+                  position: 'absolute', bottom: 6, right: 6,
+                  background: '#16a34a', color: '#fff', borderRadius: '50%', padding: '2px',
+                  display: 'flex', boxShadow: 'var(--shadow-xs)',
                 }}>
-                  <img
-                    src={personalDetails.photo}
-                    alt="Avika Malhotra"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', transition: 'transform 0.5s ease' }}
-                    onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.06)'}
-                    onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
-                    onError={e => { e.target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80"; }}
-                  />
-                  {/* Verified badge */}
-                  <div style={{
-                    position: 'absolute', bottom: 8, right: 8,
-                    background: 'var(--emerald)', color: '#fff',
-                    borderRadius: '50%', padding: '3px',
-                    boxShadow: '0 2px 8px rgba(5,150,105,0.4)',
-                    display: 'flex',
+                  <CheckCircle2 size={12} />
+                </div>
+              </div>
+
+              {/* Name */}
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-dark)', lineHeight: 1.2 }}>
+                  Avika Malhotra
+                </div>
+                <div style={{ fontSize: '0.68rem', color: 'var(--accent-mid)', fontWeight: 600, marginTop: '0.2rem', letterSpacing: '0.03em', textTransform: 'uppercase' }}>
+                  B.Tech Core · 2nd Year
+                </div>
+              </div>
+
+              {/* Stats */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.45rem', width: '100%' }}>
+                {[{ v: '5+', l: 'Projects' }, { v: '7+', l: 'Certs' }, { v: 'DSA', l: 'Focus' }].map(s => (
+                  <div key={s.l} style={{
+                    background: 'var(--bg-subtle)', border: '1px solid var(--border)',
+                    borderRadius: 'var(--r-md)', padding: '0.5rem 0.3rem', textAlign: 'center',
                   }}>
-                    <CheckCircle2 size={13} />
+                    <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '0.95rem', color: 'var(--accent)', lineHeight: 1 }}>{s.v}</div>
+                    <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginTop: '0.15rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{s.l}</div>
                   </div>
-                </div>
+                ))}
+              </div>
 
-                {/* Name + role under photo */}
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1rem', color: 'var(--text-primary)', lineHeight: 1.2 }}>
-                    Avika Malhotra
+              {/* Board scores */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.45rem', width: '100%' }}>
+                {[
+                  { l: 'Class XII', v: '90%', color: 'var(--accent-mid)', bg: 'var(--accent-soft)' },
+                  { l: 'Class X', v: '93%', color: 'var(--green)', bg: 'var(--green-soft)' },
+                ].map(s => (
+                  <div key={s.l} style={{
+                    background: s.bg, borderRadius: 'var(--r-md)',
+                    padding: '0.45rem 0.35rem', textAlign: 'center',
+                    border: '1px solid var(--border)',
+                  }}>
+                    <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{s.l}</div>
+                    <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.05rem', fontWeight: 800, color: s.color, lineHeight: 1 }}>{s.v}</div>
                   </div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--indigo)', fontWeight: 700, marginTop: '0.2rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                    B.Tech Core · 2nd Year
-                  </div>
-                </div>
-
-                {/* Mini stat cards */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem', width: '100%' }}>
-                  {[
-                    { value: '5+', label: 'Projects' },
-                    { value: '7+', label: 'Certs' },
-                    { value: 'DSA', label: 'Focus' },
-                  ].map(s => (
-                    <div key={s.label} className="stat-card" style={{ padding: '0.6rem 0.4rem' }}>
-                      <div className="stat-value" style={{ fontSize: '1.05rem' }}>{s.value}</div>
-                      <div className="stat-label" style={{ fontSize: '0.62rem' }}>{s.label}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Board scores */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', width: '100%' }}>
-                  {[
-                    { label: 'Class XII', value: '90%', color: 'var(--indigo)', pastel: 'var(--indigo-pastel)' },
-                    { label: 'Class X', value: '93%', color: 'var(--emerald)', pastel: 'var(--emerald-pastel)' },
-                  ].map(s => (
-                    <div key={s.label} style={{
-                      background: s.pastel, borderRadius: 'var(--r-md)',
-                      padding: '0.5rem 0.4rem', textAlign: 'center',
-                      border: `1px solid ${s.color}30`,
-                    }}>
-                      <div style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{s.label}</div>
-                      <div style={{ fontSize: '1.15rem', fontWeight: 800, color: s.color, fontFamily: 'var(--font-heading)', lineHeight: 1 }}>{s.value}</div>
-                    </div>
-                  ))}
-                </div>
-
+                ))}
               </div>
             </div>
           </div>
 
-          {/* ── RIGHT: Bio text ── */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.4rem' }}>
+          {/* ── Bio text ── */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
 
             {/* Status badges */}
-            <div className="reveal" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-              <span className="badge badge-indigo" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--emerald)', display: 'inline-block', animation: 'pulse-dot 1.8s ease-in-out infinite' }} />
+            <div className="reveal" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
+              <span className="badge badge-blue" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#16a34a', display: 'inline-block' }} />
                 Open for Tech Internships
               </span>
-              <span className="badge badge-sky" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                <GraduationCap size={12} /> LPU · 2nd Year · 3rd Sem
+              <span className="badge badge-teal" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <GraduationCap size={11} /> LPU · 2nd Year · 3rd Sem
               </span>
             </div>
 
             {/* Headline */}
-            <div className="reveal reveal-delay-1">
+            <div className="reveal rd-1">
               <h1 style={{
-                fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)',
-                fontWeight: 900,
-                lineHeight: 1.1,
-                letterSpacing: '-0.03em',
-                color: 'var(--text-primary)',
-                marginBottom: '0.5rem',
+                fontSize: 'clamp(1.9rem, 4vw, 2.9rem)', fontWeight: 800,
+                lineHeight: 1.12, letterSpacing: '-0.025em',
+                color: 'var(--text-dark)', marginBottom: '0.45rem',
               }}>
                 Hello, I'm{' '}
-                <span className="text-gradient heading-underline is-visible">
-                  {personalDetails.name}
-                </span>
+                <span style={{ color: 'var(--accent)' }}>{personalDetails.name}</span>
               </h1>
-
-              {/* Title order: student FIRST, then developer */}
-              <p style={{ fontSize: 'clamp(1.1rem, 2vw, 1.35rem)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.3, marginBottom: '0.25rem' }}>
+              <p style={{ fontSize: 'clamp(1rem, 1.8vw, 1.2rem)', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1.3, marginBottom: '0.2rem' }}>
                 B.Tech Student at Lovely Professional University
               </p>
-              <p style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1.1rem)', fontWeight: 500, color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+              <p style={{ fontSize: 'clamp(0.9rem, 1.4vw, 1rem)', fontWeight: 500, color: 'var(--text-muted)', lineHeight: 1.4 }}>
                 Aspiring Full-Stack Developer &amp; Software Engineer
               </p>
             </div>
 
             {/* Bio */}
-            <p className="reveal reveal-delay-2" style={{
-              fontSize: '0.97rem', color: 'var(--text-secondary)',
-              lineHeight: 1.75, maxWidth: 560,
-            }}>
+            <p className="reveal rd-2" style={{ fontSize: '0.95rem', color: 'var(--text-body)', lineHeight: 1.78, maxWidth: 540 }}>
               2nd-year B.Tech student at{' '}
-              <strong style={{ color: 'var(--text-primary)' }}>Lovely Professional University</strong> with
+              <strong style={{ color: 'var(--text-dark)' }}>Lovely Professional University</strong> with
               strong foundations in Data Structures &amp; Algorithms, modern web development, and digital
               systems. Passionate about building practical software and solving complex problems.
             </p>
 
             {/* Branch banner */}
-            <div className="reveal reveal-delay-2" style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem',
-              background: 'var(--bg-surface)',
-              border: '1.5px solid var(--border-card)',
-              borderRadius: 'var(--r-lg)', padding: '0.9rem 1.1rem',
-              boxShadow: 'var(--shadow-xs)',
-              maxWidth: 520,
+            <div className="reveal rd-2" style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.65rem',
+              background: 'var(--bg-subtle)', border: '1px solid var(--border)',
+              borderRadius: 'var(--r-lg)', padding: '0.8rem 1rem',
+              maxWidth: 500,
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <div className="icon-pill icon-pill-sm icon-indigo" style={{ borderRadius: 'var(--r-md)' }}>
-                  <GraduationCap size={16} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                <div className="icon-box icon-box-sm ib-blue">
+                  <GraduationCap size={15} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Academic Program</div>
-                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Academic Program</div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: '0.45rem', flexWrap: 'wrap' }}>
                     B.Tech Core — {lpuBranch}
-                    <span style={{ fontSize: '0.65rem', padding: '0.15rem 0.5rem', borderRadius: 'var(--r-full)', background: 'var(--amber-pastel)', color: 'var(--amber)', fontWeight: 700, border: '1px solid var(--amber-soft)' }}>Editable</span>
+                    <span style={{ fontSize: '0.62rem', padding: '0.12rem 0.45rem', borderRadius: 'var(--r-pill)', background: 'var(--amber-soft)', color: 'var(--amber)', fontWeight: 700, border: '1px solid rgba(146,64,14,0.2)' }}>Editable</span>
                   </div>
                 </div>
               </div>
-              <button
-                onClick={onOpenBranchEdit}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '0.3rem',
-                  padding: '0.38rem 0.7rem', borderRadius: 'var(--r-full)',
-                  border: '1.5px solid var(--border-card)', background: 'var(--indigo-pastel)',
-                  color: 'var(--indigo)', fontSize: '0.72rem', fontWeight: 700,
-                  cursor: 'pointer', transition: 'all 0.18s ease', flexShrink: 0,
-                  fontFamily: 'var(--font-heading)',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'var(--indigo)'; e.currentTarget.style.color = '#fff'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'var(--indigo-pastel)'; e.currentTarget.style.color = 'var(--indigo)'; }}
+              <button onClick={onOpenBranchEdit} style={{
+                display: 'flex', alignItems: 'center', gap: '0.25rem',
+                padding: '0.32rem 0.6rem', borderRadius: 'var(--r-pill)',
+                border: '1.5px solid var(--border)', background: 'var(--bg-white)',
+                color: 'var(--text-body)', fontSize: '0.7rem', fontWeight: 600,
+                cursor: 'pointer', transition: 'all 0.17s ease', flexShrink: 0,
+                fontFamily: 'var(--font-heading)',
+              }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent-line)'; e.currentTarget.style.color = 'var(--accent)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-body)'; }}
               >
                 <Edit3 size={11} /> Edit
               </button>
             </div>
 
             {/* Contact pills */}
-            <div className="reveal reveal-delay-3" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+            <div className="reveal rd-3" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
               {[
-                {
-                  icon: <Phone size={13} color="var(--emerald)" />,
-                  text: `+91 ${personalDetails.phone}`,
-                  field: 'phone', value: personalDetails.phone,
-                },
-                {
-                  icon: <Mail size={13} color="var(--sky)" />,
-                  text: personalDetails.email,
-                  field: 'email', value: personalDetails.email,
-                },
+                { icon: <Phone size={12} color="var(--green)" />, text: `+91 ${personalDetails.phone}`, field: 'phone', val: personalDetails.phone },
+                { icon: <Mail size={12} color="var(--teal)" />, text: personalDetails.email, field: 'email', val: personalDetails.email },
               ].map(item => (
-                <button
-                  key={item.field}
-                  onClick={() => copy(item.value, item.field)}
-                  className="copy-pill"
-                >
-                  {item.icon}
-                  <span>{item.text}</span>
-                  {copiedField === item.field
-                    ? <Check size={12} color="var(--emerald)" />
-                    : <Copy size={11} style={{ opacity: 0.45 }} />}
+                <button key={item.field} onClick={() => copy(item.val, item.field)} className="copy-pill">
+                  {item.icon} {item.text}
+                  {copiedField === item.field ? <Check size={11} color="var(--green)" /> : <Copy size={10} style={{ opacity: 0.4 }} />}
                 </button>
               ))}
 
-              <a
-                href={personalDetails.linkedin}
-                target="_blank" rel="noopener noreferrer"
-                className="copy-pill"
+              <a href={personalDetails.linkedin} target="_blank" rel="noopener noreferrer" className="copy-pill"
                 style={{ color: '#0a66c2', textDecoration: 'none' }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = '#0a66c2'; e.currentTarget.style.background = '#e8f0fe'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-card)'; e.currentTarget.style.background = 'var(--bg-surface)'; }}
-              >
-                <LinkedinIcon size={13} />
-                <span>LinkedIn</span>
-              </a>
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.background = 'var(--bg-white)'; }}
+              ><LinkedinIcon size={12} /> LinkedIn</a>
 
-              <a
-                href={personalDetails.github}
-                target="_blank" rel="noopener noreferrer"
-                className="copy-pill"
-                style={{ textDecoration: 'none', color: 'var(--text-secondary)' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--indigo)'; e.currentTarget.style.color = 'var(--indigo)'; e.currentTarget.style.background = 'var(--indigo-pastel)'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-card)'; e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'var(--bg-surface)'; }}
-              >
-                <GithubIcon size={13} />
-                <span>GitHub</span>
-              </a>
+              <a href={personalDetails.github} target="_blank" rel="noopener noreferrer" className="copy-pill"
+                style={{ textDecoration: 'none', color: 'var(--text-body)' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent-line)'; e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.background = 'var(--accent-soft)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-body)'; e.currentTarget.style.background = 'var(--bg-white)'; }}
+              ><GithubIcon size={12} /> GitHub</a>
             </div>
 
-            {/* CTA buttons */}
-            <div className="reveal reveal-delay-4" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', paddingTop: '0.25rem' }}>
+            {/* CTAs */}
+            <div className="reveal rd-4" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem', paddingTop: '0.2rem' }}>
               <a href="#projects" className="btn btn-primary" style={{ textDecoration: 'none' }}>
-                Explore Projects <ChevronRight size={15} />
+                Explore Projects <ChevronRight size={14} />
               </a>
               <button onClick={onOpenResume} className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <FileText size={15} /> View ATS Resume
+                <FileText size={14} /> View ATS Resume
               </button>
             </div>
-
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="reveal reveal-delay-5" style={{
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem',
-          marginTop: '3.5rem', opacity: 0.5,
-        }}>
-          <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Scroll</span>
-          <div style={{ animation: 'bounce-arrow 2s ease-in-out infinite' }}>
-            <ArrowDown size={16} color="var(--indigo)" />
+        {/* Scroll hint */}
+        <div className="reveal rd-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.35rem', marginTop: '3rem', opacity: 0.4 }}>
+          <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Scroll</span>
+          <div style={{ animation: 'arrowBounce 2s ease-in-out infinite' }}>
+            <ArrowDown size={14} color="var(--text-muted)" />
           </div>
         </div>
       </div>
 
       <style>{`
-        @keyframes pulse-dot {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50%       { opacity: 0.5; transform: scale(0.8); }
-        }
-        @keyframes bounce-arrow {
-          0%, 100% { transform: translateY(0); }
-          50%       { transform: translateY(5px); }
-        }
-        .hero-grid {
-          grid-template-columns: auto 1fr;
-        }
-        @media (max-width: 860px) {
-          .hero-grid {
-            grid-template-columns: 1fr !important;
-            justify-items: center;
-          }
-        }
+        @keyframes arrowBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(4px)} }
+        .hero-grid { grid-template-columns: 220px 1fr; }
+        @media(max-width:800px){ .hero-grid{ grid-template-columns:1fr !important; justify-items:center; } }
       `}</style>
     </section>
   );

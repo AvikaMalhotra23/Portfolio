@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
   Moon, Sun, FileText, Search, Menu, X, Edit3,
-  Award, GraduationCap, Code2, FolderGit2, Mail,
-  User, Sparkles
+  Award, GraduationCap, Code2, FolderGit2, Mail, User, Sparkles
 } from 'lucide-react';
 
-export default function Navbar({
-  darkMode, setDarkMode, onOpenResume, onOpenBranchEdit,
-  searchQuery, setSearchQuery, lpuBranch
-}) {
+export default function Navbar({ darkMode, setDarkMode, onOpenResume, onOpenBranchEdit,
+  searchQuery, setSearchQuery, lpuBranch }) {
+
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -25,206 +23,139 @@ export default function Navbar({
   ];
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  /* Active section tracker */
   useEffect(() => {
     const ids = navLinks.map(l => l.href.replace('#', ''));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); });
-      },
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); }),
       { rootMargin: '-40% 0px -55% 0px' }
     );
-    ids.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
-    return () => observer.disconnect();
+    ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
+    return () => obs.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const navStyle = {
+    position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+    background: scrolled ? 'rgba(255,255,255,0.97)' : 'rgba(255,255,255,0.92)',
+    backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)',
+    borderBottom: '1px solid var(--border)',
+    boxShadow: scrolled ? 'var(--shadow-sm)' : 'none',
+    transition: 'box-shadow 0.25s ease, padding 0.25s ease',
+    padding: scrolled ? '0.55rem 0' : '0.8rem 0',
+  };
+
+  const iconBtn = (title, onClick, children) => (
+    <button onClick={onClick} title={title} style={{
+      width: 34, height: 34, borderRadius: 'var(--r-md)',
+      border: '1.5px solid var(--border)',
+      background: 'var(--bg-white)', cursor: 'pointer',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      color: 'var(--text-muted)', transition: 'all 0.17s ease',
+    }}
+      onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent-line)'; e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.background = 'var(--accent-soft)'; }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.background = 'var(--bg-white)'; }}
+    >{children}</button>
+  );
+
   return (
-    <header
-      style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-        transition: 'all 0.3s ease',
-        padding: scrolled ? '0.6rem 0' : '0.9rem 0',
-        background: scrolled
-          ? 'rgba(255,255,255,0.92)'
-          : 'rgba(255,255,255,0.75)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(220,215,255,0.5)',
-        boxShadow: scrolled ? '0 2px 24px rgba(91,80,240,0.08)' : 'none',
-      }}
-    >
+    <header style={navStyle}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
 
         {/* Brand */}
-        <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none', flexShrink: 0 }}>
+        <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none', flexShrink: 0 }}>
           <div style={{
-            width: 38, height: 38, borderRadius: '50%', overflow: 'hidden',
-            border: '2.5px solid var(--indigo)',
-            boxShadow: '0 0 0 3px var(--indigo-pastel)',
-            flexShrink: 0,
+            width: 36, height: 36, borderRadius: '50%', overflow: 'hidden',
+            border: '2px solid var(--accent-line)', flexShrink: 0,
           }}>
-            <img
-              src="/assets/avika_profile.jpg"
-              alt="Avika Malhotra"
+            <img src="/assets/avika_profile.jpg" alt="Avika Malhotra"
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
-              onError={e => { e.target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"; }}
-            />
+              onError={e => { e.target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop"; }} />
           </div>
           <div>
-            <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '0.95rem', color: 'var(--text-primary)', lineHeight: 1.2 }}>
+            <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.92rem', color: 'var(--text-dark)', lineHeight: 1.2 }}>
               Avika Malhotra
             </div>
-            <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: 600, lineHeight: 1 }}>
-              B.Tech • LPU
-            </div>
+            <div style={{ fontSize: '0.67rem', color: 'var(--text-muted)', fontWeight: 500 }}>B.Tech · LPU</div>
           </div>
         </a>
 
-        {/* Desktop nav links */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '0.15rem' }} className="desktop-nav">
+        {/* Desktop nav */}
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '0.1rem' }} className="desk-nav">
           {navLinks.map(link => {
-            const isActive = activeSection === link.href.replace('#', '');
+            const active = activeSection === link.href.replace('#', '');
             return (
-              <a
-                key={link.name}
-                href={link.href}
-                style={{
-                  padding: '0.42rem 0.8rem',
-                  borderRadius: 'var(--r-full)',
-                  fontSize: '0.82rem',
-                  fontWeight: isActive ? 700 : 500,
-                  fontFamily: 'var(--font-heading)',
-                  color: isActive ? 'var(--indigo)' : 'var(--text-secondary)',
-                  background: isActive ? 'var(--indigo-pastel)' : 'transparent',
-                  transition: 'all 0.18s ease',
-                  textDecoration: 'none',
-                  whiteSpace: 'nowrap',
-                  position: 'relative',
-                }}
-                onMouseEnter={e => { if (!isActive) { e.currentTarget.style.color = 'var(--indigo)'; e.currentTarget.style.background = 'var(--indigo-pastel)'; } }}
-                onMouseLeave={e => { if (!isActive) { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'transparent'; } }}
-              >
-                {link.name}
-              </a>
+              <a key={link.name} href={link.href} style={{
+                padding: '0.38rem 0.72rem', borderRadius: 'var(--r-md)',
+                fontSize: '0.82rem', fontWeight: active ? 700 : 500,
+                fontFamily: 'var(--font-heading)',
+                color: active ? 'var(--accent)' : 'var(--text-body)',
+                background: active ? 'var(--accent-soft)' : 'transparent',
+                transition: 'all 0.17s ease', textDecoration: 'none', whiteSpace: 'nowrap',
+                position: 'relative',
+              }}
+                onMouseEnter={e => { if (!active) { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.background = 'var(--accent-soft)'; } }}
+                onMouseLeave={e => { if (!active) { e.currentTarget.style.color = 'var(--text-body)'; e.currentTarget.style.background = 'transparent'; } }}
+              >{link.name}</a>
             );
           })}
         </nav>
 
         {/* Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
 
           {/* Search */}
           {searchOpen ? (
             <div style={{
-              display: 'flex', alignItems: 'center', gap: '0.4rem',
-              background: 'var(--bg-surface)', border: '1.5px solid var(--indigo)',
-              borderRadius: 'var(--r-full)', padding: '0.4rem 0.8rem',
-              boxShadow: '0 0 0 4px rgba(91,80,240,0.10)',
+              display: 'flex', alignItems: 'center', gap: '0.35rem',
+              background: 'var(--bg-white)', border: '1.5px solid var(--accent-mid)',
+              borderRadius: 'var(--r-pill)', padding: '0.35rem 0.75rem',
+              boxShadow: '0 0 0 3px rgba(65,84,200,0.10)',
             }}>
-              <Search size={14} color="var(--indigo)" />
-              <input
-                type="text"
-                placeholder="Search skills, projects…"
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                autoFocus
-                style={{
-                  background: 'transparent', border: 'none', outline: 'none',
-                  fontSize: '0.8rem', color: 'var(--text-primary)', width: 160,
-                  fontFamily: 'var(--font-body)',
-                }}
-              />
-              <button onClick={() => { setSearchOpen(false); setSearchQuery(''); }} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex' }}>
-                <X size={14} color="var(--text-muted)" />
+              <Search size={13} color="var(--accent-mid)" />
+              <input type="text" placeholder="Search skills, projects…" value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)} autoFocus
+                style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.8rem', color: 'var(--text-dark)', width: 150, fontFamily: 'var(--font-body)' }} />
+              <button onClick={() => { setSearchOpen(false); setSearchQuery(''); }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex', color: 'var(--text-muted)' }}>
+                <X size={13} />
               </button>
             </div>
-          ) : (
-            <button
-              onClick={() => setSearchOpen(true)}
-              title="Search"
-              style={{
-                width: 34, height: 34, borderRadius: 'var(--r-md)',
-                border: '1.5px solid var(--border-card)',
-                background: 'var(--bg-surface)', cursor: 'pointer',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: 'var(--text-secondary)',
-                transition: 'all 0.18s ease',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--indigo)'; e.currentTarget.style.color = 'var(--indigo)'; e.currentTarget.style.background = 'var(--indigo-pastel)'; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-card)'; e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'var(--bg-surface)'; }}
-            >
-              <Search size={15} />
-            </button>
-          )}
+          ) : iconBtn('Search', () => setSearchOpen(true), <Search size={15} />)}
 
           {/* Edit Branch */}
-          <button
-            onClick={onOpenBranchEdit}
-            className="edit-branch-btn"
-            title="Edit LPU branch"
-            style={{
-              display: 'flex', alignItems: 'center', gap: '0.3rem',
-              padding: '0.4rem 0.75rem',
-              borderRadius: 'var(--r-full)',
-              border: '1.5px solid var(--border-card)',
-              background: 'var(--bg-surface)',
-              fontSize: '0.75rem', fontWeight: 700, fontFamily: 'var(--font-heading)',
-              color: 'var(--indigo)', cursor: 'pointer',
-              transition: 'all 0.18s ease',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--indigo-pastel)'; e.currentTarget.style.borderColor = 'var(--indigo)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-surface)'; e.currentTarget.style.borderColor = 'var(--border-card)'; }}
+          <button onClick={onOpenBranchEdit} className="branch-btn" style={{
+            display: 'flex', alignItems: 'center', gap: '0.3rem',
+            padding: '0.38rem 0.7rem', borderRadius: 'var(--r-pill)',
+            border: '1.5px solid var(--border)', background: 'var(--bg-white)',
+            fontSize: '0.75rem', fontWeight: 600, fontFamily: 'var(--font-heading)',
+            color: 'var(--text-body)', cursor: 'pointer', transition: 'all 0.17s ease',
+          }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent-line)'; e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.background = 'var(--accent-soft)'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-body)'; e.currentTarget.style.background = 'var(--bg-white)'; }}
           >
-            <Edit3 size={12} />
-            <span>Branch</span>
+            <Edit3 size={12} /> Branch
           </button>
 
           {/* ATS Resume */}
-          <button
-            onClick={onOpenResume}
-            className="btn btn-primary"
-            style={{ padding: '0.45rem 1rem', fontSize: '0.8rem', borderRadius: 'var(--r-full)' }}
-          >
-            <FileText size={14} />
-            <span className="resume-label">Resume</span>
+          <button onClick={onOpenResume} className="btn btn-primary" style={{ padding: '0.42rem 0.95rem', fontSize: '0.78rem' }}>
+            <FileText size={13} /> <span className="res-label">Resume</span>
           </button>
 
           {/* Theme toggle */}
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            title={darkMode ? 'Light mode' : 'Dark mode'}
-            style={{
-              width: 34, height: 34, borderRadius: 'var(--r-md)',
-              border: '1.5px solid var(--border-card)',
-              background: 'var(--bg-surface)', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: 'var(--text-secondary)',
-              transition: 'all 0.18s ease',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--amber)'; e.currentTarget.style.color = 'var(--amber)'; e.currentTarget.style.background = 'var(--amber-pastel)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-card)'; e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'var(--bg-surface)'; }}
-          >
-            {darkMode ? <Sun size={15} /> : <Moon size={15} />}
-          </button>
+          {iconBtn(darkMode ? 'Light mode' : 'Dark mode', () => setDarkMode(!darkMode),
+            darkMode ? <Sun size={15} /> : <Moon size={15} />)}
 
-          {/* Mobile menu toggle */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="mobile-menu-btn"
-            style={{
-              width: 34, height: 34, borderRadius: 'var(--r-md)',
-              border: '1.5px solid var(--border-card)',
-              background: 'var(--bg-surface)', cursor: 'pointer',
-              display: 'none', alignItems: 'center', justifyContent: 'center',
-              color: 'var(--text-primary)',
-            }}
-          >
+          {/* Mobile menu */}
+          <button onClick={() => setMobileOpen(!mobileOpen)} className="mob-btn" style={{
+            width: 34, height: 34, borderRadius: 'var(--r-md)', border: '1.5px solid var(--border)',
+            background: 'var(--bg-white)', cursor: 'pointer', display: 'none',
+            alignItems: 'center', justifyContent: 'center', color: 'var(--text-dark)',
+          }}>
             {mobileOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
@@ -233,62 +164,43 @@ export default function Navbar({
       {/* Mobile drawer */}
       {mobileOpen && (
         <div style={{
-          background: 'rgba(255,255,255,0.97)', borderTop: '1px solid var(--border-card)',
-          padding: '1rem 1.5rem 1.5rem',
-          boxShadow: '0 8px 32px rgba(91,80,240,0.10)',
+          background: 'var(--bg-white)', borderTop: '1px solid var(--border)',
+          padding: '0.9rem 1.5rem 1.25rem',
+          boxShadow: 'var(--shadow-md)',
         }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem', marginBottom: '1rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem', marginBottom: '0.85rem' }}>
             {navLinks.map(link => {
               const Icon = link.icon;
-              const isActive = activeSection === link.href.replace('#', '');
+              const active = activeSection === link.href.replace('#', '');
               return (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: '0.75rem',
-                    padding: '0.65rem 0.75rem',
-                    borderRadius: 'var(--r-md)',
-                    fontSize: '0.88rem', fontWeight: isActive ? 700 : 500,
-                    color: isActive ? 'var(--indigo)' : 'var(--text-secondary)',
-                    background: isActive ? 'var(--indigo-pastel)' : 'transparent',
-                    textDecoration: 'none',
-                    transition: 'all 0.15s ease',
-                  }}
-                >
-                  <Icon size={16} color={isActive ? 'var(--indigo)' : 'var(--text-muted)'} />
-                  {link.name}
+                <a key={link.name} href={link.href} onClick={() => setMobileOpen(false)} style={{
+                  display: 'flex', alignItems: 'center', gap: '0.65rem',
+                  padding: '0.58rem 0.65rem', borderRadius: 'var(--r-md)',
+                  fontSize: '0.88rem', fontWeight: active ? 700 : 500,
+                  color: active ? 'var(--accent)' : 'var(--text-body)',
+                  background: active ? 'var(--accent-soft)' : 'transparent',
+                  textDecoration: 'none', transition: 'all 0.15s ease',
+                }}>
+                  <Icon size={15} color={active ? 'var(--accent)' : 'var(--text-muted)'} /> {link.name}
                 </a>
               );
             })}
           </div>
-          <button
-            onClick={() => { onOpenBranchEdit(); setMobileOpen(false); }}
-            style={{
-              width: '100%', padding: '0.6rem', borderRadius: 'var(--r-md)',
-              border: '1.5px solid var(--border-card)',
-              background: 'var(--indigo-pastel)', color: 'var(--indigo)',
-              fontSize: '0.82rem', fontWeight: 700, fontFamily: 'var(--font-heading)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
-              cursor: 'pointer',
-            }}
-          >
+          <button onClick={() => { onOpenBranchEdit(); setMobileOpen(false); }} style={{
+            width: '100%', padding: '0.55rem', borderRadius: 'var(--r-md)',
+            border: '1.5px solid var(--border)', background: 'var(--bg-subtle)',
+            color: 'var(--text-body)', fontSize: '0.82rem', fontWeight: 600,
+            fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center',
+            justifyContent: 'center', gap: '0.35rem', cursor: 'pointer',
+          }}>
             <Edit3 size={13} /> Edit Branch: {lpuBranch}
           </button>
         </div>
       )}
 
       <style>{`
-        @media (max-width: 1023px) {
-          .desktop-nav { display: none !important; }
-          .edit-branch-btn { display: none !important; }
-          .resume-label { display: none; }
-          .mobile-menu-btn { display: flex !important; }
-        }
-        @media (max-width: 480px) {
-          .resume-label { display: none; }
-        }
+        @media(max-width:1023px){ .desk-nav,.branch-btn{ display:none !important; } .mob-btn{ display:flex !important; } }
+        @media(max-width:480px){ .res-label{ display:none; } }
       `}</style>
     </header>
   );
