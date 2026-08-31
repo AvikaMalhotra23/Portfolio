@@ -1,9 +1,9 @@
 import React from 'react';
-import { GraduationCap, Award, Calendar, CheckCircle2, Edit3, Sparkles } from 'lucide-react';
+import { GraduationCap, Award, Calendar, CheckCircle2 } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
-export default function EducationSection({ lpuBranch, onOpenBranchEdit }) {
-  const ref = useScrollReveal([lpuBranch]);
+export default function EducationSection({ lpuBranch }) {
+  const ref = useScrollReveal([]);
 
   return (
     <section ref={ref} id="education" className="section" style={{ background: 'var(--bg-white)' }}>
@@ -58,31 +58,7 @@ export default function EducationSection({ lpuBranch, onOpenBranchEdit }) {
                   B.Tech (Core) · {lpuBranch}
                 </p>
 
-                {/* Editable note */}
-                <div style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.65rem',
-                  padding: '0.6rem 0.85rem', borderRadius: 'var(--r-md)',
-                  background: 'var(--amber-soft)', border: '1px solid rgba(146,64,14,0.18)',
-                  marginBottom: '0.9rem',
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.78rem', color: 'var(--amber)', fontWeight: 600 }}>
-                    <Sparkles size={13} />
-                    <span>Specialization editable · Currently: <strong>{lpuBranch}</strong></span>
-                  </div>
-                  <button onClick={onOpenBranchEdit} style={{
-                    display: 'flex', alignItems: 'center', gap: '0.25rem',
-                    padding: '0.28rem 0.55rem', borderRadius: 'var(--r-pill)',
-                    background: 'rgba(146,64,14,0.12)', border: '1px solid rgba(146,64,14,0.25)',
-                    color: 'var(--amber)', fontSize: '0.7rem', fontWeight: 700,
-                    cursor: 'pointer', transition: 'all 0.17s ease', flexShrink: 0,
-                    fontFamily: 'var(--font-heading)',
-                  }}
-                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(146,64,14,0.22)'}
-                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(146,64,14,0.12)'}
-                  >
-                    <Edit3 size={10} /> Change
-                  </button>
-                </div>
+                {/* Editable note removed — branch is fixed */}
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {[

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Moon, Sun, FileText, Search, Menu, X, Edit3,
+  Moon, Sun, FileText, Search, Menu, X,
   Award, GraduationCap, Code2, FolderGit2, Mail, User, Sparkles
 } from 'lucide-react';
 
-export default function Navbar({ darkMode, setDarkMode, onOpenResume, onOpenBranchEdit,
+export default function Navbar({ darkMode, setDarkMode, onOpenResume,
   searchQuery, setSearchQuery, lpuBranch }) {
 
   const [scrolled, setScrolled] = useState(false);
@@ -127,20 +127,6 @@ export default function Navbar({ darkMode, setDarkMode, onOpenResume, onOpenBran
             </div>
           ) : iconBtn('Search', () => setSearchOpen(true), <Search size={15} />)}
 
-          {/* Edit Branch */}
-          <button onClick={onOpenBranchEdit} className="branch-btn" style={{
-            display: 'flex', alignItems: 'center', gap: '0.3rem',
-            padding: '0.38rem 0.7rem', borderRadius: 'var(--r-pill)',
-            border: '1.5px solid var(--border)', background: 'var(--bg-white)',
-            fontSize: '0.75rem', fontWeight: 600, fontFamily: 'var(--font-heading)',
-            color: 'var(--text-body)', cursor: 'pointer', transition: 'all 0.17s ease',
-          }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent-line)'; e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.background = 'var(--accent-soft)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-body)'; e.currentTarget.style.background = 'var(--bg-white)'; }}
-          >
-            <Edit3 size={12} /> Branch
-          </button>
-
           {/* ATS Resume */}
           <button onClick={onOpenResume} className="btn btn-primary" style={{ padding: '0.42rem 0.95rem', fontSize: '0.78rem' }}>
             <FileText size={13} /> <span className="res-label">Resume</span>
@@ -186,20 +172,11 @@ export default function Navbar({ darkMode, setDarkMode, onOpenResume, onOpenBran
               );
             })}
           </div>
-          <button onClick={() => { onOpenBranchEdit(); setMobileOpen(false); }} style={{
-            width: '100%', padding: '0.55rem', borderRadius: 'var(--r-md)',
-            border: '1.5px solid var(--border)', background: 'var(--bg-subtle)',
-            color: 'var(--text-body)', fontSize: '0.82rem', fontWeight: 600,
-            fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', gap: '0.35rem', cursor: 'pointer',
-          }}>
-            <Edit3 size={13} /> Edit Branch: {lpuBranch}
-          </button>
         </div>
       )}
 
       <style>{`
-        @media(max-width:1023px){ .desk-nav,.branch-btn{ display:none !important; } .mob-btn{ display:flex !important; } }
+        @media(max-width:1023px){ .desk-nav{ display:none !important; } .mob-btn{ display:flex !important; } }
         @media(max-width:480px){ .res-label{ display:none; } }
       `}</style>
     </header>

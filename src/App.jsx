@@ -13,15 +13,13 @@ import Footer from './components/Footer';
 import AtsResumeModal from './components/AtsResumeModal';
 import CertificateModal from './components/CertificateModal';
 import ProjectDetailModal from './components/ProjectDetailModal';
-import BranchEditModal from './components/BranchEditModal';
+
+const LPU_BRANCH = 'Computer Science & Engineering';
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [lpuBranch, setLpuBranch] = useState('Computer Science & Engineering');
-
   const [isResumeOpen, setIsResumeOpen] = useState(false);
-  const [isBranchEditOpen, setIsBranchEditOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedCert, setSelectedCert] = useState(null);
 
@@ -37,21 +35,19 @@ export default function App() {
       <Navbar
         darkMode={darkMode} setDarkMode={setDarkMode}
         onOpenResume={() => setIsResumeOpen(true)}
-        onOpenBranchEdit={() => setIsBranchEditOpen(true)}
         searchQuery={searchQuery} setSearchQuery={setSearchQuery}
-        lpuBranch={lpuBranch}
+        lpuBranch={LPU_BRANCH}
       />
 
       <main style={{ flex: 1 }}>
         <Hero
           onOpenResume={() => setIsResumeOpen(true)}
-          onOpenBranchEdit={() => setIsBranchEditOpen(true)}
-          lpuBranch={lpuBranch}
+          lpuBranch={LPU_BRANCH}
         />
         <div className="section-divider" />
         <AboutSection />
         <div className="section-divider" />
-        <EducationSection lpuBranch={lpuBranch} onOpenBranchEdit={() => setIsBranchEditOpen(true)} />
+        <EducationSection lpuBranch={LPU_BRANCH} />
         <div className="section-divider" />
         <SkillsSection searchQuery={searchQuery} />
         <div className="section-divider" />
@@ -66,8 +62,7 @@ export default function App() {
 
       <Footer />
 
-      <AtsResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} lpuBranch={lpuBranch} />
-      <BranchEditModal isOpen={isBranchEditOpen} onClose={() => setIsBranchEditOpen(false)} currentBranch={lpuBranch} onSaveBranch={b => setLpuBranch(b)} />
+      <AtsResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} lpuBranch={LPU_BRANCH} />
       <ProjectDetailModal project={selectedProject} onClose={() => setSelectedProject(null)} />
       <CertificateModal cert={selectedCert} onClose={() => setSelectedCert(null)} />
     </div>

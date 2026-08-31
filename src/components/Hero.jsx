@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { personalDetails } from '../data/portfolioData';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
-import { Mail, Phone, FileText, CheckCircle2, Copy, Check, Edit3, ChevronRight, GraduationCap, ArrowDown } from 'lucide-react';
+import { Mail, Phone, FileText, CheckCircle2, Copy, Check, ChevronRight, GraduationCap, ArrowDown } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
-export default function Hero({ onOpenResume, onOpenBranchEdit, lpuBranch }) {
+export default function Hero({ onOpenResume, lpuBranch }) {
   const [copiedField, setCopiedField] = useState(null);
   const [mounted, setMounted] = useState(false);
   const ref = useScrollReveal([]);
@@ -148,38 +148,22 @@ export default function Hero({ onOpenResume, onOpenBranchEdit, lpuBranch }) {
               systems. Passionate about building practical software and solving complex problems.
             </p>
 
-            {/* Branch banner */}
+            {/* Branch banner — read-only */}
             <div className="reveal rd-2" style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.65rem',
+              display: 'flex', alignItems: 'center', gap: '0.65rem',
               background: 'var(--bg-subtle)', border: '1px solid var(--border)',
               borderRadius: 'var(--r-lg)', padding: '0.8rem 1rem',
               maxWidth: 500,
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                <div className="icon-box icon-box-sm ib-blue">
-                  <GraduationCap size={15} />
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Academic Program</div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: '0.45rem', flexWrap: 'wrap' }}>
-                    B.Tech Core — {lpuBranch}
-                    <span style={{ fontSize: '0.62rem', padding: '0.12rem 0.45rem', borderRadius: 'var(--r-pill)', background: 'var(--amber-soft)', color: 'var(--amber)', fontWeight: 700, border: '1px solid rgba(146,64,14,0.2)' }}>Editable</span>
-                  </div>
+              <div className="icon-box icon-box-sm ib-blue">
+                <GraduationCap size={15} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Academic Program</div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-dark)' }}>
+                  B.Tech Core — {lpuBranch}
                 </div>
               </div>
-              <button onClick={onOpenBranchEdit} style={{
-                display: 'flex', alignItems: 'center', gap: '0.25rem',
-                padding: '0.32rem 0.6rem', borderRadius: 'var(--r-pill)',
-                border: '1.5px solid var(--border)', background: 'var(--bg-white)',
-                color: 'var(--text-body)', fontSize: '0.7rem', fontWeight: 600,
-                cursor: 'pointer', transition: 'all 0.17s ease', flexShrink: 0,
-                fontFamily: 'var(--font-heading)',
-              }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent-line)'; e.currentTarget.style.color = 'var(--accent)'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-body)'; }}
-              >
-                <Edit3 size={11} /> Edit
-              </button>
             </div>
 
             {/* Contact pills */}
