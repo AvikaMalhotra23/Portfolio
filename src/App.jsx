@@ -17,7 +17,7 @@ import ProjectDetailModal from './components/ProjectDetailModal';
 import BranchEditModal from './components/BranchEditModal';
 
 export default function App() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [lpuBranch, setLpuBranch] = useState('Computer Science & Engineering');
   

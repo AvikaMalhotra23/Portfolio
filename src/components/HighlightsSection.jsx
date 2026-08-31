@@ -13,11 +13,11 @@ export default function HighlightsSection() {
   };
 
   return (
-    <section id="highlights" className="py-20">
+    <section id="highlights" className="py-24 bg-[var(--bg-main)]">
       <div className="container">
-        
+
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="section-tag">Key Attributes</span>
           <h2 className="section-title">Additional Highlights</h2>
           <p className="text-[var(--text-secondary)] text-sm sm:text-base">
@@ -30,7 +30,7 @@ export default function HighlightsSection() {
           {additionalHighlights.map((item, index) => {
             const IconComponent = iconMap[item.icon] || Sparkles;
             return (
-              <div 
+              <div
                 key={item.title}
                 className="glass-panel p-6 flex flex-col justify-between hover:border-[var(--border-glow)] transition-all duration-300 transform hover:-translate-y-1 group"
               >

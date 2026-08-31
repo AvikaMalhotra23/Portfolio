@@ -11,11 +11,11 @@ export default function CertificationsSection({ onSelectCert, searchQuery }) {
   });
 
   return (
-    <section id="certifications" className="py-20 bg-[var(--bg-surface)]/50 border-y border-[var(--border-color)]">
+    <section id="certifications" className="py-24 bg-[var(--bg-surface)] border-y border-[var(--border-color)]">
       <div className="container">
-        
+
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="section-tag">Credentials & Simulations</span>
           <h2 className="section-title">Certifications & Training</h2>
           <p className="text-[var(--text-secondary)] text-sm sm:text-base">
@@ -26,15 +26,15 @@ export default function CertificationsSection({ onSelectCert, searchQuery }) {
         {/* Certifications Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredCerts.map((cert) => (
-            <div 
-              key={cert.id} 
+            <div
+              key={cert.id}
               className="glass-panel group overflow-hidden flex flex-col justify-between hover:border-[var(--border-glow)] transition-all duration-300"
             >
               <div>
-                
+
                 {/* Certificate Image Frame / Header */}
                 {cert.image ? (
-                  <div 
+                  <div
                     onClick={() => onSelectCert(cert)}
                     className="relative h-44 bg-slate-900 overflow-hidden cursor-pointer group/img"
                   >
@@ -49,7 +49,7 @@ export default function CertificationsSection({ onSelectCert, searchQuery }) {
                         <span>View Certificate Image</span>
                       </span>
                     </div>
-                    
+
                     <span className="absolute top-3 left-3 badge badge-emerald font-bold flex items-center gap-1">
                       <ShieldCheck size={12} />
                       <span>Verified</span>
@@ -69,7 +69,7 @@ export default function CertificationsSection({ onSelectCert, searchQuery }) {
 
                 {/* Content Body */}
                 <div className="p-6">
-                  
+
                   <div className="flex items-center justify-between gap-2 text-xs text-[var(--text-muted)] mb-1 font-semibold">
                     <span className="text-[var(--accent-cyan)] uppercase tracking-wider">{cert.issuer}</span>
                     <span className="flex items-center gap-1">

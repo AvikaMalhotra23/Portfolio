@@ -4,11 +4,11 @@ import { GraduationCap, Award, Calendar, CheckCircle2, Edit3, Sparkles } from 'l
 
 export default function EducationSection({ lpuBranch, onOpenBranchEdit }) {
   return (
-    <section id="education" className="py-20">
+    <section id="education" className="py-24 bg-[var(--bg-main)]">
       <div className="container">
-        
+
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="section-tag">Academic Timeline</span>
           <h2 className="section-title">Education & Academic Distinction</h2>
           <p className="text-[var(--text-secondary)] text-sm sm:text-base">
@@ -18,10 +18,10 @@ export default function EducationSection({ lpuBranch, onOpenBranchEdit }) {
 
         {/* Timeline Layout */}
         <div className="max-w-4xl mx-auto space-y-8">
-          
+
           {/* Card 1: Lovely Professional University */}
           <div className="glass-panel p-6 sm:p-8 relative overflow-hidden border-l-4 border-l-[var(--accent-cyan)] shadow-lg hover:shadow-cyan-500/10 transition-all">
-            
+
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-2xl bg-[var(--accent-cyan)]/15 text-[var(--accent-cyan)] shrink-0 mt-1">
@@ -85,7 +85,7 @@ export default function EducationSection({ lpuBranch, onOpenBranchEdit }) {
 
           {/* Grid of Schooling (Class XII and Class X) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
+
             {/* Card 2: Heritage International School (Class XII) */}
             <div className="glass-panel p-6 border-l-4 border-l-[var(--accent-indigo)]">
               <div className="flex items-start justify-between gap-2 mb-3">
@@ -95,7 +95,7 @@ export default function EducationSection({ lpuBranch, onOpenBranchEdit }) {
                   <span>2025</span>
                 </span>
               </div>
-              
+
               <h3 className="text-lg font-bold text-[var(--text-primary)] mb-1">
                 Heritage International School
               </h3>

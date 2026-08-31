@@ -30,11 +30,11 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-[var(--bg-surface)]/50 border-t border-[var(--border-color)]">
+    <section id="contact" className="py-24 bg-[var(--bg-surface)] border-t border-[var(--border-color)]">
       <div className="container">
-        
+
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="section-tag">Get In Touch</span>
           <h2 className="section-title">Connect With Avika</h2>
           <p className="text-[var(--text-secondary)] text-sm sm:text-base">
@@ -43,10 +43,10 @@ export default function ContactSection() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-5xl mx-auto">
-          
+
           {/* Contact Details Column (5 cols) */}
           <div className="lg:col-span-5 space-y-4">
-            
+
             {/* Phone Card */}
             <div className="glass-panel p-5 flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">

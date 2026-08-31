@@ -19,11 +19,11 @@ export default function ProjectsSection({ onSelectProject, searchQuery }) {
   });
 
   return (
-    <section id="projects" className="py-20">
+    <section id="projects" className="py-24 bg-[var(--bg-main)]">
       <div className="container">
-        
+
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
+        <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="section-tag">Portfolio Work</span>
           <h2 className="section-title">Featured Projects</h2>
           <p className="text-[var(--text-secondary)] text-sm sm:text-base">
@@ -32,16 +32,15 @@ export default function ProjectsSection({ onSelectProject, searchQuery }) {
         </div>
 
         {/* Filter Buttons */}
-        <div className="flex items-center justify-center flex-wrap gap-2 mb-12">
+        <div className="flex items-center justify-center flex-wrap gap-2 mb-10">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
-                filter === cat
-                  ? 'bg-[var(--gradient-primary)] text-white shadow-md'
-                  : 'bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-color)]'
-              }`}
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${filter === cat
+                ? 'bg-[var(--gradient-primary)] text-white shadow-md'
+                : 'bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-color)]'
+                }`}
             >
               {cat}
             </button>
@@ -51,12 +50,12 @@ export default function ProjectsSection({ onSelectProject, searchQuery }) {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project) => (
-            <div 
-              key={project.id} 
+            <div
+              key={project.id}
               className="glass-panel group overflow-hidden flex flex-col justify-between hover:border-[var(--border-glow)] transition-all duration-300 transform hover:-translate-y-1"
             >
               <div>
-                
+
                 {/* Project Image Preview Frame */}
                 <div className="relative h-48 sm:h-52 overflow-hidden bg-slate-900">
                   <img
@@ -68,7 +67,7 @@ export default function ProjectsSection({ onSelectProject, searchQuery }) {
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-surface)] via-transparent to-transparent opacity-80"></div>
-                  
+
                   {/* Category Type Tag Overlay */}
                   <span className="absolute top-3 left-3 badge badge-cyan font-bold shadow-md">
                     {project.typeTag}
@@ -86,7 +85,7 @@ export default function ProjectsSection({ onSelectProject, searchQuery }) {
 
                 {/* Card Content Body */}
                 <div className="p-6">
-                  
+
                   {/* Title */}
                   <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent-cyan)] transition-colors">
                     {project.title}

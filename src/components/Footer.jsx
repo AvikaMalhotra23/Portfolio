@@ -9,11 +9,11 @@ export default function Footer() {
   };
 
   return (
-    <footer className="py-12 bg-[var(--bg-main)] border-t border-[var(--border-color)]">
+    <footer className="py-10 bg-[var(--bg-main)] border-t-2 border-[var(--border-color)]">
       <div className="container">
-        
+
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-[var(--border-color)]">
-          
+
           {/* Brand & Tagline */}
           <div className="text-center md:text-left">
             <h3 className="text-xl font-bold text-[var(--text-primary)]">Avika Malhotra</h3>

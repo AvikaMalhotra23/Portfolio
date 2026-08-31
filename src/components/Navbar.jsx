@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun, FileText, Search, Menu, X, Edit3, Award, GraduationCap, Code2, FolderGit2, Mail } from 'lucide-react';
 
-export default function Navbar({ 
-  darkMode, 
-  setDarkMode, 
-  onOpenResume, 
-  onOpenBranchEdit, 
-  searchQuery, 
+export default function Navbar({
+  darkMode,
+  setDarkMode,
+  onOpenResume,
+  onOpenBranchEdit,
+  searchQuery,
   setSearchQuery,
-  lpuBranch 
+  lpuBranch
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -33,19 +33,18 @@ export default function Navbar({
   ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-      scrolled 
-        ? 'bg-[var(--bg-main)]/90 backdrop-blur-md border-b border-[var(--border-color)] shadow-lg py-3' 
-        : 'bg-transparent py-5'
-    }`}>
+    <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled
+        ? 'bg-[var(--bg-surface)]/95 backdrop-blur-md border-b border-[var(--border-color)] shadow-sm py-3'
+        : 'bg-[var(--bg-surface)]/80 backdrop-blur-sm border-b border-[var(--border-color)] py-4'
+      }`}>
       <div className="container flex items-center justify-between gap-4">
-        
+
         {/* Brand Logo & Name */}
         <a href="#" className="flex items-center gap-3 group">
           <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[var(--accent-indigo)] group-hover:scale-105 transition-transform shadow-md">
-            <img 
-              src="/assets/avika_profile.jpg" 
-              alt="Avika Malhotra" 
+            <img
+              src="/assets/avika_profile.jpg"
+              alt="Avika Malhotra"
               className="w-full h-full object-cover"
               onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"; }}
             />
@@ -75,7 +74,7 @@ export default function Navbar({
 
         {/* Action Controls (Search, Branch Edit, ATS Resume, Theme Toggle) */}
         <div className="flex items-center gap-2">
-          
+
           {/* Search Toggle */}
           <div className="relative">
             {searchOpen ? (
@@ -89,7 +88,7 @@ export default function Navbar({
                   className="bg-transparent text-xs text-[var(--text-primary)] focus:outline-none w-36 md:w-48"
                   autoFocus
                 />
-                <button 
+                <button
                   onClick={() => { setSearchOpen(false); setSearchQuery(''); }}
                   className="text-[var(--text-muted)] hover:text-[var(--text-primary)] p-0.5"
                 >

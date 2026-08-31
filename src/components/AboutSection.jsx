@@ -10,11 +10,11 @@ export default function AboutSection() {
   };
 
   return (
-    <section id="about" className="py-20 bg-[var(--bg-surface)]/50 border-y border-[var(--border-color)]">
+    <section id="about" className="py-24 bg-[var(--bg-surface)] border-y border-[var(--border-color)]">
       <div className="container">
-        
+
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="section-tag">About Me</span>
           <h2 className="section-title">Driven by Curiosity & Problem-Solving</h2>
           <p className="text-[var(--text-secondary)] text-sm sm:text-base">
@@ -23,7 +23,7 @@ export default function AboutSection() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
+
           {/* Professional Overview Card (7 cols) */}
           <div className="lg:col-span-7 glass-panel p-6 sm:p-8 flex flex-col justify-between">
             <div>
@@ -73,7 +73,7 @@ export default function AboutSection() {
 
           {/* Languages & Interests Cards Column (5 cols) */}
           <div className="lg:col-span-5 flex flex-col gap-6">
-            
+
             {/* Languages Card */}
             <div className="glass-panel p-6">
               <div className="flex items-center gap-3 mb-4">
@@ -107,8 +107,8 @@ export default function AboutSection() {
                   {interests.map((item) => {
                     const IconComponent = iconMap[item.icon] || Code;
                     return (
-                      <div 
-                        key={item.name} 
+                      <div
+                        key={item.name}
                         className="flex flex-col items-center justify-center p-4 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] text-center hover:border-[var(--border-glow)] transition-colors group"
                       >
                         <IconComponent size={24} className="text-[var(--accent-cyan)] mb-2 group-hover:scale-110 transition-transform" />
