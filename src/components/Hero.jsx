@@ -169,7 +169,7 @@ export default function Hero({ onOpenResume, lpuBranch }) {
               <h1 style={{
                 fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(2rem, 4.5vw, 3.1rem)',
-                fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em',
+                fontWeight: 700, lineHeight: 1.2, letterSpacing: 'normal',
                 color: 'var(--text-dark)', marginBottom: '0.5rem',
               }}>
                 Hello, I'm{' '}
