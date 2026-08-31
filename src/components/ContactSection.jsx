@@ -25,15 +25,18 @@ export default function ContactSection() {
   };
 
   return (
-    <section ref={ref} id="contact" className="section" style={{ background: 'var(--bg-subtle)' }}>
+    <section ref={ref} id="contact" className="section" style={{
+      background: 'linear-gradient(180deg, var(--bg-subtle) 0%, var(--bg-white) 100%)',
+    }}>
       <div className="container">
 
         <div className="sec-header reveal">
           <div className="eyebrow">Get In Touch</div>
-          <h2 className="sec-title">Connect With <span style={{ color: 'var(--accent)' }}>Avika</span></h2>
+          <h2 className="sec-title">Connect With <span className="u-line grad-text">Avika</span></h2>
           <p className="sec-subtitle">
             Open for software engineering internships, project collaborations, and full-stack development placement opportunities.
           </p>
+          <div className="sec-rule"><div className="sec-rule-dot" /></div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.35fr', gap: '1.75rem', maxWidth: 920, margin: '0 auto' }} className="contact-grid">
@@ -123,7 +126,7 @@ export default function ContactSection() {
           </div>
 
           {/* Right: message form */}
-          <div className="card reveal rd-2" style={{ padding: '1.75rem', background: 'var(--bg-white)' }}>
+          <div className="card reveal rd-2" style={{ padding: '1.85rem', background: 'var(--bg-white)', boxShadow: 'var(--shadow-xl)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', marginBottom: '1.25rem' }}>
               <div className="icon-box icon-box-md ib-blue"><MessageSquare size={17} /></div>
               <div>

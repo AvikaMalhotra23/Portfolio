@@ -51,10 +51,11 @@ export default function CertificationsSection({ onSelectCert, searchQuery }) {
 
         <div className="sec-header reveal">
           <div className="eyebrow">Credentials &amp; Simulations</div>
-          <h2 className="sec-title">Certifications &amp; <span style={{ color: 'var(--accent)' }}>Training</span></h2>
+          <h2 className="sec-title">Certifications &amp; <span className="u-line grad-text">Training</span></h2>
           <p className="sec-subtitle">
             Verified technical certifications in C++, Cloud Computing, AI, and Deloitte Australia corporate simulations.
           </p>
+          <div className="sec-rule"><div className="sec-rule-dot" /></div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.35rem' }} className="certs-grid">

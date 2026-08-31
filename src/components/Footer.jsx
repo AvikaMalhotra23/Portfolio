@@ -10,7 +10,7 @@ export default function Footer() {
     <footer style={{
       background: 'var(--bg-white)',
       borderTop: '1px solid var(--border)',
-      paddingTop: '2rem',
+      paddingTop: '2.25rem',
       paddingBottom: '1.75rem',
     }}>
       <div className="container">
@@ -21,7 +21,10 @@ export default function Footer() {
           borderBottom: '1px solid var(--border)',
         }}>
           <div>
-            <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1.05rem', color: 'var(--text-dark)' }}>Avika Malhotra</div>
+            <div style={{
+              fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.1rem',
+              background: 'var(--grad-p)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+            }}>Avika Malhotra</div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
               Aspiring Software Engineer &amp; Full-Stack Developer · Lovely Professional University
             </div>

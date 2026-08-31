@@ -6,10 +6,10 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 const iconMap = { BookOpen, Layers, Target, Cpu, TrendingUp, Briefcase };
 
 const accents = [
-  { ibCls: 'ib-blue', borderColor: 'var(--accent-mid)' },
+  { ibCls: 'ib-violet', borderColor: 'var(--p1)' },
+  { ibCls: 'ib-sky', borderColor: 'var(--sky)' },
   { ibCls: 'ib-teal', borderColor: 'var(--teal)' },
-  { ibCls: 'ib-green', borderColor: 'var(--green)' },
-  { ibCls: 'ib-blue', borderColor: 'var(--accent)' },
+  { ibCls: 'ib-violet', borderColor: 'var(--p2)' },
   { ibCls: 'ib-amber', borderColor: 'var(--amber)' },
   { ibCls: 'ib-rose', borderColor: 'var(--rose)' },
 ];
@@ -23,10 +23,11 @@ export default function HighlightsSection() {
 
         <div className="sec-header reveal">
           <div className="eyebrow">Key Attributes</div>
-          <h2 className="sec-title">Additional <span style={{ color: 'var(--accent)' }}>Highlights</span></h2>
+          <h2 className="sec-title">Additional <span className="u-line grad-text">Highlights</span></h2>
           <p className="sec-subtitle">
             Core strengths, learning philosophy, problem-solving mindset, and practical industry readiness.
           </p>
+          <div className="sec-rule"><div className="sec-rule-dot" /></div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.35rem' }} className="hi-grid">

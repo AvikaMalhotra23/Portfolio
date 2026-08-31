@@ -9,10 +9,10 @@ import {
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const catMeta = {
-  'Programming Languages': { icon: Code, color: 'var(--accent-mid)', soft: 'var(--accent-soft)', cls: 'ib-blue' },
-  'Web Development': { icon: Globe, color: 'var(--teal)', soft: 'var(--teal-soft)', cls: 'ib-teal' },
-  'Database & Backend': { icon: Database, color: 'var(--green)', soft: 'var(--green-soft)', cls: 'ib-green' },
-  'Core Computer Science': { icon: Cpu, color: 'var(--accent)', soft: 'var(--accent-soft)', cls: 'ib-blue' },
+  'Programming Languages': { icon: Code, color: 'var(--p1)', soft: 'var(--p-soft)', cls: 'ib-violet' },
+  'Web Development': { icon: Globe, color: 'var(--sky)', soft: 'var(--sky-soft)', cls: 'ib-sky' },
+  'Database & Backend': { icon: Database, color: 'var(--teal)', soft: 'var(--teal-soft)', cls: 'ib-teal' },
+  'Core Computer Science': { icon: Cpu, color: 'var(--p2)', soft: 'var(--p-soft)', cls: 'ib-violet' },
   'Tools & Platforms': { icon: Wrench, color: 'var(--amber)', soft: 'var(--amber-soft)', cls: 'ib-amber' },
   'AI / Machine Learning': { icon: Sparkles, color: 'var(--rose)', soft: 'var(--rose-soft)', cls: 'ib-rose' },
 };
@@ -45,10 +45,11 @@ export default function SkillsSection({ searchQuery }) {
 
         <div className="sec-header reveal">
           <div className="eyebrow">Technical Competencies</div>
-          <h2 className="sec-title">Categorized <span style={{ color: 'var(--accent)' }}>Technical Skills</span></h2>
+          <h2 className="sec-title">Categorized <span className="u-line grad-text">Technical Skills</span></h2>
           <p className="sec-subtitle">
             A structured view of languages, web stacks, database engineering, CS fundamentals, tools, and AI technologies.
           </p>
+          <div className="sec-rule"><div className="sec-rule-dot" /></div>
         </div>
 
         {/* Filter tabs */}
@@ -66,9 +67,9 @@ export default function SkillsSection({ searchQuery }) {
             const meta = catMeta[cat.category] || catMeta['Programming Languages'];
             const CatIcon = meta.icon;
             return (
-              <div key={cat.category} className={`card reveal rd-${Math.min(ci + 1, 6)}`} style={{ padding: '1.35rem', display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+              <div key={cat.category} className={`card reveal rd-${Math.min(ci + 1, 6)}`} style={{ padding: '1.4rem', display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
                 {/* Header */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', paddingBottom: '0.75rem', borderBottom: `1.5px solid ${meta.soft}` }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', paddingBottom: '0.8rem', borderBottom: `2px solid ${meta.soft}` }}>
                   <div className={`icon-box icon-box-md ${meta.cls}`}>
                     <CatIcon size={18} />
                   </div>
@@ -100,10 +101,10 @@ export default function SkillsSection({ searchQuery }) {
                           <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{skill.description}</div>
                         </div>
                         <span style={{
-                          flexShrink: 0, fontSize: '0.62rem', fontWeight: 700, padding: '0.14rem 0.45rem', borderRadius: 'var(--r-pill)',
+                          flexShrink: 0, fontSize: '0.62rem', fontWeight: 700, padding: '0.14rem 0.5rem', borderRadius: 'var(--r-pill)',
                           ...(skill.level === 'Advanced'
-                            ? { background: 'var(--teal-soft)', color: 'var(--teal)', border: '1px solid rgba(14,116,144,0.22)' }
-                            : { background: 'var(--accent-soft)', color: 'var(--accent-mid)', border: '1px solid var(--accent-line)' }),
+                            ? { background: 'var(--teal-soft)', color: 'var(--teal)', border: '1px solid var(--teal-line)' }
+                            : { background: 'var(--p-soft)', color: 'var(--p1)', border: '1px solid var(--p-line)' }),
                         }}>
                           {skill.level}
                         </span>

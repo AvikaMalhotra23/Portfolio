@@ -25,10 +25,11 @@ export default function ProjectsSection({ onSelectProject, searchQuery }) {
 
         <div className="sec-header reveal">
           <div className="eyebrow">Portfolio Work</div>
-          <h2 className="sec-title">Featured <span style={{ color: 'var(--accent)' }}>Projects</span></h2>
+          <h2 className="sec-title">Featured <span className="u-line grad-text">Projects</span></h2>
           <p className="sec-subtitle">
             Practical application of software development, algorithm design, location services, campus utilities, and digital electronics.
           </p>
+          <div className="sec-rule"><div className="sec-rule-dot" /></div>
         </div>
 
         {/* Filter tabs */}
@@ -50,13 +51,15 @@ export default function ProjectsSection({ onSelectProject, searchQuery }) {
                   onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                   onError={e => { e.target.src = "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80"; }}
                 />
-                {/* Type badge */}
                 <div style={{
                   position: 'absolute', top: 10, left: 10,
                   background: 'rgba(255,255,255,0.94)',
-                  padding: '0.22rem 0.6rem', borderRadius: 'var(--r-pill)',
-                  fontSize: '0.68rem', fontWeight: 700, color: 'var(--accent)',
-                  border: '1px solid var(--border)', boxShadow: 'var(--shadow-xs)',
+                  backdropFilter: 'blur(6px)',
+                  padding: '0.22rem 0.62rem', borderRadius: 'var(--r-pill)',
+                  fontSize: '0.68rem', fontWeight: 700,
+                  background: 'var(--grad-p)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+                  border: '1px solid var(--p-mid)', boxShadow: 'var(--shadow-xs)',
+                  backgroundColor: 'rgba(255,255,255,0.94)',
                 }}>
                   {project.typeTag}
                 </div>
