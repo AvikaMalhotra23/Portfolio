@@ -1,180 +1,295 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, FileText, Search, Menu, X, Edit3, Award, GraduationCap, Code2, FolderGit2, Mail } from 'lucide-react';
+import {
+  Moon, Sun, FileText, Search, Menu, X, Edit3,
+  Award, GraduationCap, Code2, FolderGit2, Mail,
+  User, Sparkles
+} from 'lucide-react';
 
 export default function Navbar({
-  darkMode,
-  setDarkMode,
-  onOpenResume,
-  onOpenBranchEdit,
-  searchQuery,
-  setSearchQuery,
-  lpuBranch
+  darkMode, setDarkMode, onOpenResume, onOpenBranchEdit,
+  searchQuery, setSearchQuery, lpuBranch
 }) {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const [activeSection, setActiveSection] = useState('');
 
   const navLinks = [
-    { name: 'About', href: '#about', icon: GraduationCap },
+    { name: 'About', href: '#about', icon: User },
     { name: 'Education', href: '#education', icon: GraduationCap },
     { name: 'Skills', href: '#skills', icon: Code2 },
     { name: 'Projects', href: '#projects', icon: FolderGit2 },
     { name: 'Certifications', href: '#certifications', icon: Award },
-    { name: 'Highlights', href: '#highlights', icon: Edit3 },
-    { name: 'Contact', href: '#contact', icon: Mail }
+    { name: 'Highlights', href: '#highlights', icon: Sparkles },
+    { name: 'Contact', href: '#contact', icon: Mail },
   ];
 
-  return (
-    <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled
-        ? 'bg-[var(--bg-surface)]/95 backdrop-blur-md border-b border-[var(--border-color)] shadow-sm py-3'
-        : 'bg-[var(--bg-surface)]/80 backdrop-blur-sm border-b border-[var(--border-color)] py-4'
-      }`}>
-      <div className="container flex items-center justify-between gap-4">
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-        {/* Brand Logo & Name */}
-        <a href="#" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[var(--accent-indigo)] group-hover:scale-105 transition-transform shadow-md">
+  /* Active section tracker */
+  useEffect(() => {
+    const ids = navLinks.map(l => l.href.replace('#', ''));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); });
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    );
+    ids.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <header
+      style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+        transition: 'all 0.3s ease',
+        padding: scrolled ? '0.6rem 0' : '0.9rem 0',
+        background: scrolled
+          ? 'rgba(255,255,255,0.92)'
+          : 'rgba(255,255,255,0.75)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(220,215,255,0.5)',
+        boxShadow: scrolled ? '0 2px 24px rgba(91,80,240,0.08)' : 'none',
+      }}
+    >
+      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+
+        {/* Brand */}
+        <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none', flexShrink: 0 }}>
+          <div style={{
+            width: 38, height: 38, borderRadius: '50%', overflow: 'hidden',
+            border: '2.5px solid var(--indigo)',
+            boxShadow: '0 0 0 3px var(--indigo-pastel)',
+            flexShrink: 0,
+          }}>
             <img
               src="/assets/avika_profile.jpg"
               alt="Avika Malhotra"
-              className="w-full h-full object-cover"
-              onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"; }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+              onError={e => { e.target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"; }}
             />
           </div>
           <div>
-            <span className="font-bold text-lg tracking-tight text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors">
+            <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '0.95rem', color: 'var(--text-primary)', lineHeight: 1.2 }}>
               Avika Malhotra
-            </span>
-            <span className="block text-xs text-[var(--text-muted)] font-medium">
-              B.Tech LPU • {lpuBranch || "Core"}
-            </span>
+            </div>
+            <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: 600, lineHeight: 1 }}>
+              B.Tech • LPU
+            </div>
           </div>
         </a>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] transition-colors hover:scale-105 transform"
-            >
-              {link.name}
-            </a>
-          ))}
+        {/* Desktop nav links */}
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '0.15rem' }} className="desktop-nav">
+          {navLinks.map(link => {
+            const isActive = activeSection === link.href.replace('#', '');
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                style={{
+                  padding: '0.42rem 0.8rem',
+                  borderRadius: 'var(--r-full)',
+                  fontSize: '0.82rem',
+                  fontWeight: isActive ? 700 : 500,
+                  fontFamily: 'var(--font-heading)',
+                  color: isActive ? 'var(--indigo)' : 'var(--text-secondary)',
+                  background: isActive ? 'var(--indigo-pastel)' : 'transparent',
+                  transition: 'all 0.18s ease',
+                  textDecoration: 'none',
+                  whiteSpace: 'nowrap',
+                  position: 'relative',
+                }}
+                onMouseEnter={e => { if (!isActive) { e.currentTarget.style.color = 'var(--indigo)'; e.currentTarget.style.background = 'var(--indigo-pastel)'; } }}
+                onMouseLeave={e => { if (!isActive) { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'transparent'; } }}
+              >
+                {link.name}
+              </a>
+            );
+          })}
         </nav>
 
-        {/* Action Controls (Search, Branch Edit, ATS Resume, Theme Toggle) */}
-        <div className="flex items-center gap-2">
+        {/* Actions */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
 
-          {/* Search Toggle */}
-          <div className="relative">
-            {searchOpen ? (
-              <div className="flex items-center bg-[var(--bg-card)] border border-[var(--border-glow)] rounded-full px-3 py-1.5 shadow-md">
-                <Search size={16} className="text-[var(--accent-cyan)] mr-2" />
-                <input
-                  type="text"
-                  placeholder="Search skills, projects, certs..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-transparent text-xs text-[var(--text-primary)] focus:outline-none w-36 md:w-48"
-                  autoFocus
-                />
-                <button
-                  onClick={() => { setSearchOpen(false); setSearchQuery(''); }}
-                  className="text-[var(--text-muted)] hover:text-[var(--text-primary)] p-0.5"
-                >
-                  <X size={14} />
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => setSearchOpen(true)}
-                className="p-2 rounded-lg bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] border border-[var(--border-color)] hover:border-[var(--border-glow)] transition-all"
-                title="Search portfolio..."
-              >
-                <Search size={18} />
+          {/* Search */}
+          {searchOpen ? (
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: '0.4rem',
+              background: 'var(--bg-surface)', border: '1.5px solid var(--indigo)',
+              borderRadius: 'var(--r-full)', padding: '0.4rem 0.8rem',
+              boxShadow: '0 0 0 4px rgba(91,80,240,0.10)',
+            }}>
+              <Search size={14} color="var(--indigo)" />
+              <input
+                type="text"
+                placeholder="Search skills, projects…"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                autoFocus
+                style={{
+                  background: 'transparent', border: 'none', outline: 'none',
+                  fontSize: '0.8rem', color: 'var(--text-primary)', width: 160,
+                  fontFamily: 'var(--font-body)',
+                }}
+              />
+              <button onClick={() => { setSearchOpen(false); setSearchQuery(''); }} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex' }}>
+                <X size={14} color="var(--text-muted)" />
               </button>
-            )}
-          </div>
+            </div>
+          ) : (
+            <button
+              onClick={() => setSearchOpen(true)}
+              title="Search"
+              style={{
+                width: 34, height: 34, borderRadius: 'var(--r-md)',
+                border: '1.5px solid var(--border-card)',
+                background: 'var(--bg-surface)', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: 'var(--text-secondary)',
+                transition: 'all 0.18s ease',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--indigo)'; e.currentTarget.style.color = 'var(--indigo)'; e.currentTarget.style.background = 'var(--indigo-pastel)'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-card)'; e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'var(--bg-surface)'; }}
+            >
+              <Search size={15} />
+            </button>
+          )}
 
-          {/* Quick Branch Edit Button */}
+          {/* Edit Branch */}
           <button
             onClick={onOpenBranchEdit}
-            className="hidden sm:flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[var(--bg-card)] text-[var(--accent-indigo)] border border-[var(--border-color)] hover:border-[var(--accent-indigo)] transition-all"
-            title="Edit LPU Branch/Specialization"
+            className="edit-branch-btn"
+            title="Edit LPU branch"
+            style={{
+              display: 'flex', alignItems: 'center', gap: '0.3rem',
+              padding: '0.4rem 0.75rem',
+              borderRadius: 'var(--r-full)',
+              border: '1.5px solid var(--border-card)',
+              background: 'var(--bg-surface)',
+              fontSize: '0.75rem', fontWeight: 700, fontFamily: 'var(--font-heading)',
+              color: 'var(--indigo)', cursor: 'pointer',
+              transition: 'all 0.18s ease',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--indigo-pastel)'; e.currentTarget.style.borderColor = 'var(--indigo)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-surface)'; e.currentTarget.style.borderColor = 'var(--border-card)'; }}
           >
-            <Edit3 size={13} />
+            <Edit3 size={12} />
             <span>Branch</span>
           </button>
 
-          {/* ATS Resume Button */}
+          {/* ATS Resume */}
           <button
             onClick={onOpenResume}
-            className="btn btn-primary text-xs py-2 px-3.5 flex items-center gap-1.5 shadow-sm"
+            className="btn btn-primary"
+            style={{ padding: '0.45rem 1rem', fontSize: '0.8rem', borderRadius: 'var(--r-full)' }}
           >
-            <FileText size={15} />
-            <span className="hidden xs:inline">ATS Resume</span>
+            <FileText size={14} />
+            <span className="resume-label">Resume</span>
           </button>
 
-          {/* Theme Toggle */}
+          {/* Theme toggle */}
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className="p-2 rounded-lg bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--accent-amber)] border border-[var(--border-color)] hover:border-[var(--accent-amber)] transition-all"
-            title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            title={darkMode ? 'Light mode' : 'Dark mode'}
+            style={{
+              width: 34, height: 34, borderRadius: 'var(--r-md)',
+              border: '1.5px solid var(--border-card)',
+              background: 'var(--bg-surface)', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: 'var(--text-secondary)',
+              transition: 'all 0.18s ease',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--amber)'; e.currentTarget.style.color = 'var(--amber)'; e.currentTarget.style.background = 'var(--amber-pastel)'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-card)'; e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'var(--bg-surface)'; }}
           >
-            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+            {darkMode ? <Sun size={15} /> : <Moon size={15} />}
           </button>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile menu toggle */}
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 lg:hidden rounded-lg bg-[var(--bg-card)] text-[var(--text-primary)] border border-[var(--border-color)]"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="mobile-menu-btn"
+            style={{
+              width: 34, height: 34, borderRadius: 'var(--r-md)',
+              border: '1.5px solid var(--border-card)',
+              background: 'var(--bg-surface)', cursor: 'pointer',
+              display: 'none', alignItems: 'center', justifyContent: 'center',
+              color: 'var(--text-primary)',
+            }}
           >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Navigation */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-[var(--bg-surface)] border-b border-[var(--border-color)] px-6 py-4 shadow-xl">
-          <div className="flex flex-col gap-3 mb-4">
-            {navLinks.map((link) => {
+      {/* Mobile drawer */}
+      {mobileOpen && (
+        <div style={{
+          background: 'rgba(255,255,255,0.97)', borderTop: '1px solid var(--border-card)',
+          padding: '1rem 1.5rem 1.5rem',
+          boxShadow: '0 8px 32px rgba(91,80,240,0.10)',
+        }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem', marginBottom: '1rem' }}>
+            {navLinks.map(link => {
               const Icon = link.icon;
+              const isActive = activeSection === link.href.replace('#', '');
               return (
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 text-sm font-medium text-[var(--text-primary)] py-2 border-b border-[var(--border-color)]/30 hover:text-[var(--accent-cyan)]"
+                  onClick={() => setMobileOpen(false)}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '0.75rem',
+                    padding: '0.65rem 0.75rem',
+                    borderRadius: 'var(--r-md)',
+                    fontSize: '0.88rem', fontWeight: isActive ? 700 : 500,
+                    color: isActive ? 'var(--indigo)' : 'var(--text-secondary)',
+                    background: isActive ? 'var(--indigo-pastel)' : 'transparent',
+                    textDecoration: 'none',
+                    transition: 'all 0.15s ease',
+                  }}
                 >
-                  <Icon size={16} className="text-[var(--accent-cyan)]" />
+                  <Icon size={16} color={isActive ? 'var(--indigo)' : 'var(--text-muted)'} />
                   {link.name}
                 </a>
               );
             })}
           </div>
-
-          <div className="flex items-center justify-between pt-2">
-            <button
-              onClick={() => { onOpenBranchEdit(); setMobileMenuOpen(false); }}
-              className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg bg-[var(--bg-card)] text-[var(--accent-indigo)] border border-[var(--border-color)]"
-            >
-              <Edit3 size={14} />
-              <span>Edit LPU Branch ({lpuBranch})</span>
-            </button>
-          </div>
+          <button
+            onClick={() => { onOpenBranchEdit(); setMobileOpen(false); }}
+            style={{
+              width: '100%', padding: '0.6rem', borderRadius: 'var(--r-md)',
+              border: '1.5px solid var(--border-card)',
+              background: 'var(--indigo-pastel)', color: 'var(--indigo)',
+              fontSize: '0.82rem', fontWeight: 700, fontFamily: 'var(--font-heading)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
+              cursor: 'pointer',
+            }}
+          >
+            <Edit3 size={13} /> Edit Branch: {lpuBranch}
+          </button>
         </div>
       )}
+
+      <style>{`
+        @media (max-width: 1023px) {
+          .desktop-nav { display: none !important; }
+          .edit-branch-btn { display: none !important; }
+          .resume-label { display: none; }
+          .mobile-menu-btn { display: flex !important; }
+        }
+        @media (max-width: 480px) {
+          .resume-label { display: none; }
+        }
+      `}</style>
     </header>
   );
 }

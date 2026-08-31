@@ -10,7 +10,6 @@ import HighlightsSection from './components/HighlightsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 
-// Modals
 import AtsResumeModal from './components/AtsResumeModal';
 import CertificateModal from './components/CertificateModal';
 import ProjectDetailModal from './components/ProjectDetailModal';
@@ -20,28 +19,26 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [lpuBranch, setLpuBranch] = useState('Computer Science & Engineering');
-  
-  // Modals state
+
   const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [isBranchEditOpen, setIsBranchEditOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedCert, setSelectedCert] = useState(null);
 
-  // Sync dark mode class on <html> element
   useEffect(() => {
+    const html = document.documentElement;
     if (darkMode) {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
+      html.classList.add('dark');
+      html.classList.remove('light');
     } else {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
+      html.classList.remove('dark');
+      html.classList.add('light');
     }
   }, [darkMode]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--bg-main)] text-[var(--text-primary)] transition-colors duration-300">
-      
-      {/* Top Fixed Header */}
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-main)', color: 'var(--text-primary)', transition: 'background 0.3s ease, color 0.3s ease' }}>
+
       <Navbar
         darkMode={darkMode}
         setDarkMode={setDarkMode}
@@ -52,64 +49,41 @@ export default function App() {
         lpuBranch={lpuBranch}
       />
 
-      {/* Main Page Sections */}
-      <main className="flex-grow">
+      <main style={{ flex: 1 }}>
         <Hero
           onOpenResume={() => setIsResumeOpen(true)}
           onOpenBranchEdit={() => setIsBranchEditOpen(true)}
           lpuBranch={lpuBranch}
         />
-        
+
+        <div className="section-divider" />
         <AboutSection />
-        
-        <EducationSection
-          lpuBranch={lpuBranch}
-          onOpenBranchEdit={() => setIsBranchEditOpen(true)}
-        />
-        
+
+        <div className="section-divider" />
+        <EducationSection lpuBranch={lpuBranch} onOpenBranchEdit={() => setIsBranchEditOpen(true)} />
+
+        <div className="section-divider" />
         <SkillsSection searchQuery={searchQuery} />
-        
-        <ProjectsSection
-          onSelectProject={(proj) => setSelectedProject(proj)}
-          searchQuery={searchQuery}
-        />
-        
-        <CertificationsSection
-          onSelectCert={(cert) => setSelectedCert(cert)}
-          searchQuery={searchQuery}
-        />
-        
+
+        <div className="section-divider" />
+        <ProjectsSection onSelectProject={p => setSelectedProject(p)} searchQuery={searchQuery} />
+
+        <div className="section-divider" />
+        <CertificationsSection onSelectCert={c => setSelectedCert(c)} searchQuery={searchQuery} />
+
+        <div className="section-divider" />
         <HighlightsSection />
-        
+
+        <div className="section-divider" />
         <ContactSection />
       </main>
 
-      {/* Bottom Footer */}
       <Footer />
 
-      {/* Interactive Modals */}
-      <AtsResumeModal
-        isOpen={isResumeOpen}
-        onClose={() => setIsResumeOpen(false)}
-        lpuBranch={lpuBranch}
-      />
-
-      <BranchEditModal
-        isOpen={isBranchEditOpen}
-        onClose={() => setIsBranchEditOpen(false)}
-        currentBranch={lpuBranch}
-        onSaveBranch={(newBranch) => setLpuBranch(newBranch)}
-      />
-
-      <ProjectDetailModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
-
-      <CertificateModal
-        cert={selectedCert}
-        onClose={() => setSelectedCert(null)}
-      />
+      <AtsResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} lpuBranch={lpuBranch} />
+      <BranchEditModal isOpen={isBranchEditOpen} onClose={() => setIsBranchEditOpen(false)} currentBranch={lpuBranch} onSaveBranch={b => setLpuBranch(b)} />
+      <ProjectDetailModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      <CertificateModal cert={selectedCert} onClose={() => setSelectedCert(null)} />
 
     </div>
   );

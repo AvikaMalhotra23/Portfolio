@@ -1,148 +1,200 @@
 import React, { useState } from 'react';
 import { projects } from '../data/portfolioData';
-import { ExternalLink, Layers, Sparkles, CheckCircle2, ChevronRight, Eye, Tag } from 'lucide-react';
+import { ExternalLink, ChevronRight, Eye, Tag, ArrowRight } from 'lucide-react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+
+const categories = ['All', 'Web Development', 'Learning Platform', 'Web & Location', 'Student Assistance', 'Hardware & ECE'];
 
 export default function ProjectsSection({ onSelectProject, searchQuery }) {
   const [filter, setFilter] = useState('All');
+  const ref = useScrollReveal([filter, searchQuery]);
 
-  const categories = ['All', 'Web Development', 'Learning Platform', 'Web & Location', 'Student Assistance', 'Hardware & ECE'];
-
-  const filteredProjects = projects.filter(project => {
-    const matchesCategory = filter === 'All' || project.category === filter;
-    const matchesSearch = searchQuery === '' ||
-      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.shortDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.techStack.some(t => t.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      project.keyFocus.some(k => k.toLowerCase().includes(searchQuery.toLowerCase()));
-
-    return matchesCategory && matchesSearch;
+  const filtered = projects.filter(p => {
+    const matchCat = filter === 'All' || p.category === filter;
+    const matchSearch = !searchQuery ||
+      p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.shortDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.techStack.some(t => t.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      p.keyFocus.some(k => k.toLowerCase().includes(searchQuery.toLowerCase()));
+    return matchCat && matchSearch;
   });
 
   return (
-    <section id="projects" className="py-24 bg-[var(--bg-main)]">
-      <div className="container">
+    <section ref={ref} id="projects" className="section" style={{ background: 'var(--bg-main)' }}>
+      {/* Subtle bg accent */}
+      <div style={{
+        position: 'absolute', top: 0, left: 0, right: 0, height: '40%',
+        background: 'linear-gradient(180deg, var(--indigo-soft) 0%, transparent 100%)',
+        pointerEvents: 'none', zIndex: 0,
+      }} />
+      <span className="code-deco" style={{ top: '10%', right: '3%', fontSize: '1rem' }}>{'{ }'}</span>
 
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="section-tag">Portfolio Work</span>
-          <h2 className="section-title">Featured Projects</h2>
-          <p className="text-[var(--text-secondary)] text-sm sm:text-base">
-            Practical application of software development, algorithm design, location services, campus utilities, and digital electronics.
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+
+        <div className="section-header reveal">
+          <div className="eyebrow">Portfolio Work</div>
+          <h2 className="section-title">
+            Featured{' '}
+            <span className="text-gradient">Projects</span>
+          </h2>
+          <p className="section-subtitle">
+            Practical application of software development, algorithm design, location services, campus utilities and digital electronics.
           </p>
         </div>
 
-        {/* Filter Buttons */}
-        <div className="flex items-center justify-center flex-wrap gap-2 mb-10">
-          {categories.map((cat) => (
+        {/* Filter tabs */}
+        <div className="reveal" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.5rem', marginBottom: '3rem' }}>
+          {categories.map(cat => (
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${filter === cat
-                ? 'bg-[var(--gradient-primary)] text-white shadow-md'
-                : 'bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-color)]'
-                }`}
-            >
-              {cat}
-            </button>
+              className={`filter-tab${filter === cat ? ' active' : ''}`}
+            >{cat}</button>
           ))}
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project) => (
-            <div
+        {/* Cards grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.75rem' }} className="projects-grid">
+          {filtered.map((project, i) => (
+            <article
               key={project.id}
-              className="glass-panel group overflow-hidden flex flex-col justify-between hover:border-[var(--border-glow)] transition-all duration-300 transform hover:-translate-y-1"
+              className={`card reveal reveal-delay-${Math.min(i + 1, 6)}`}
+              style={{
+                padding: 0, overflow: 'hidden', display: 'flex',
+                flexDirection: 'column', cursor: 'default',
+              }}
             >
-              <div>
-
-                {/* Project Image Preview Frame */}
-                <div className="relative h-48 sm:h-52 overflow-hidden bg-slate-900">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    onError={(e) => {
-                      e.target.src = "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80";
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-surface)] via-transparent to-transparent opacity-80"></div>
-
-                  {/* Category Type Tag Overlay */}
-                  <span className="absolute top-3 left-3 badge badge-cyan font-bold shadow-md">
-                    {project.typeTag}
-                  </span>
-
-                  {/* View Details Hover Overlay Button */}
-                  <button
-                    onClick={() => onSelectProject(project)}
-                    className="absolute bottom-3 right-3 p-2 rounded-lg bg-[var(--bg-main)]/80 text-[var(--accent-cyan)] border border-[var(--border-color)] opacity-90 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 text-xs font-semibold"
-                  >
-                    <Eye size={14} />
-                    <span>Quick View</span>
-                  </button>
+              {/* Image */}
+              <div className="project-img-wrap" style={{ position: 'relative', borderRadius: 'var(--r-xl) var(--r-xl) 0 0' }}>
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  onError={e => { e.target.src = "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80"; }}
+                />
+                {/* Type badge overlay */}
+                <div style={{
+                  position: 'absolute', top: 12, left: 12,
+                  background: 'rgba(255,255,255,0.92)',
+                  backdropFilter: 'blur(8px)',
+                  padding: '0.28rem 0.7rem',
+                  borderRadius: 'var(--r-full)',
+                  fontSize: '0.7rem', fontWeight: 700,
+                  color: 'var(--indigo)',
+                  border: '1px solid var(--border-card)',
+                  boxShadow: 'var(--shadow-xs)',
+                }}>
+                  {project.typeTag}
                 </div>
-
-                {/* Card Content Body */}
-                <div className="p-6">
-
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent-cyan)] transition-colors">
-                    {project.title}
-                  </h3>
-
-                  {/* Short Description */}
-                  <p className="text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-3 mb-4 leading-relaxed">
-                    {project.shortDescription}
-                  </p>
-
-                  {/* Key Focus Tags Pill Grid */}
-                  <div className="mb-4">
-                    <span className="text-[11px] font-bold text-[var(--text-muted)] uppercase tracking-wider block mb-2">Key Focus:</span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.keyFocus.map((focus, i) => (
-                        <span key={i} className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-[var(--accent-indigo)]/10 text-[var(--accent-indigo)] border border-[var(--accent-indigo)]/20">
-                          • {focus}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Tech Stack Pills */}
-                  <div className="flex flex-wrap gap-1.5 pt-3 border-t border-[var(--border-color)]">
-                    {project.techStack.map((tech) => (
-                      <span key={tech} className="text-[11px] font-medium px-2.5 py-0.5 rounded-md bg-[var(--bg-surface)] text-[var(--text-muted)] border border-[var(--border-color)]">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                </div>
-
-              </div>
-
-              {/* Card Footer Button */}
-              <div className="px-6 pb-6 pt-2">
+                {/* Quick view hover */}
                 <button
                   onClick={() => onSelectProject(project)}
-                  className="w-full btn btn-secondary text-xs py-2.5 flex items-center justify-center gap-2 group-hover:border-[var(--accent-cyan)] transition-colors"
+                  style={{
+                    position: 'absolute', bottom: 10, right: 10,
+                    display: 'flex', alignItems: 'center', gap: '0.35rem',
+                    background: 'rgba(255,255,255,0.92)',
+                    backdropFilter: 'blur(8px)',
+                    padding: '0.35rem 0.7rem',
+                    borderRadius: 'var(--r-full)',
+                    border: '1px solid var(--border-card)',
+                    fontSize: '0.72rem', fontWeight: 700, color: 'var(--indigo)',
+                    cursor: 'pointer', transition: 'all 0.18s ease',
+                    boxShadow: 'var(--shadow-xs)',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--indigo)'; e.currentTarget.style.color = '#fff'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.92)'; e.currentTarget.style.color = 'var(--indigo)'; }}
                 >
-                  <span>Detailed Overview</span>
-                  <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  <Eye size={12} /> Quick View
                 </button>
               </div>
 
-            </div>
+              {/* Card body */}
+              <div style={{ padding: '1.35rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '0.85rem', flex: 1 }}>
+                <h3 style={{
+                  fontFamily: 'var(--font-heading)', fontWeight: 800,
+                  fontSize: '1.05rem', color: 'var(--text-primary)', lineHeight: 1.25,
+                  transition: 'color 0.18s ease',
+                }}>
+                  {project.title}
+                </h3>
+
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                  {project.shortDescription}
+                </p>
+
+                {/* Key focus */}
+                <div>
+                  <div style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.4rem' }}>
+                    Key Focus
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                    {project.keyFocus.map((f, fi) => (
+                      <span key={fi} style={{
+                        fontSize: '0.7rem', fontWeight: 600,
+                        padding: '0.2rem 0.55rem', borderRadius: 'var(--r-full)',
+                        background: 'var(--indigo-pastel)', color: 'var(--indigo)',
+                        border: '1px solid rgba(91,80,240,0.18)',
+                      }}>
+                        {f}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tech stack */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', paddingTop: '0.75rem', borderTop: '1px solid var(--border-card)' }}>
+                  {project.techStack.map(tech => (
+                    <span key={tech} className="tech-pill">{tech}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card footer */}
+              <div style={{ padding: '0 1.5rem 1.35rem' }}>
+                <button
+                  onClick={() => onSelectProject(project)}
+                  style={{
+                    width: '100%', padding: '0.65rem',
+                    borderRadius: 'var(--r-full)',
+                    border: '1.5px solid var(--border-card)',
+                    background: 'var(--bg-surface)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
+                    fontSize: '0.82rem', fontWeight: 700,
+                    color: 'var(--text-secondary)', cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    fontFamily: 'var(--font-heading)',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = 'var(--indigo)';
+                    e.currentTarget.style.borderColor = 'var(--indigo)';
+                    e.currentTarget.style.color = '#fff';
+                    e.currentTarget.querySelector('.arrow-icon').style.transform = 'translateX(4px)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = 'var(--bg-surface)';
+                    e.currentTarget.style.borderColor = 'var(--border-card)';
+                    e.currentTarget.style.color = 'var(--text-secondary)';
+                    e.currentTarget.querySelector('.arrow-icon').style.transform = 'translateX(0)';
+                  }}
+                >
+                  Detailed Overview
+                  <ArrowRight size={14} className="arrow-icon" style={{ transition: 'transform 0.18s ease' }} />
+                </button>
+              </div>
+            </article>
           ))}
         </div>
 
-        {filteredProjects.length === 0 && (
-          <div className="text-center py-12 text-[var(--text-muted)]">
-            No matching projects found for "{searchQuery}".
+        {filtered.length === 0 && (
+          <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+            No matching projects for "{searchQuery}".
           </div>
         )}
-
       </div>
+
+      <style>{`
+        @media (max-width: 1024px) { .projects-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 640px)  { .projects-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
     </section>
   );
 }
